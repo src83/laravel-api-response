@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src83\LaravelApiResponse\Exceptions\DTO;
+namespace Src83\LaravelApiResponse\Support\DTO;
 
 final readonly class ApiErrorDTO
 {

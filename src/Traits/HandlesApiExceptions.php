@@ -15,7 +15,7 @@ use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 use Psr\Container\NotFoundExceptionInterface;
-use Src83\LaravelApiResponse\Exceptions\DTO\ApiErrorDTO;
+use Src83\LaravelApiResponse\Support\DTO\ApiErrorDTO;
 use Src83\LaravelApiResponse\Exceptions\ItemNotFoundException;
 use Src83\LaravelApiResponse\Http\Responses\ApiErrorResponse;
 use Src83\LaravelApiResponse\Support\Logging\ApiLogger;
