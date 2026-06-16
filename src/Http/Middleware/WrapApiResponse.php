@@ -21,17 +21,16 @@ class WrapApiResponse
             return $response;
         }
 
+        if ($response instanceof ApiResponse) {
+            return $response;
+        }
+
         if (!method_exists($response, 'getOriginalContent')) {
             return $response;
         }
 
         $content = $response->getOriginalContent();
-
-        if (is_array($content) && array_key_exists('success', $content)) {
-            return $response;
-        }
-
-        $data   = $content ?? null;
+        $data    = $content ?? null;
         $status = method_exists($response, 'getStatusCode')
             ? $response->getStatusCode()
             : Response::HTTP_OK;
