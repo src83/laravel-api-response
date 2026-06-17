@@ -11,8 +11,8 @@ final readonly class ApiPaginator
     public function __construct(
         public int  $page,
         public int  $perPage,
-        public int  $totalItem,
-        public int  $totalPage,
+        public int  $totalItems,
+        public int  $totalPages,
         public ?int $lastItem,
         public bool $hasNextPage,
     ) {}
@@ -22,8 +22,8 @@ final readonly class ApiPaginator
         return new self(
             page:        $p->currentPage(),
             perPage:     $p->perPage(),
-            totalItem:   $p->total(),
-            totalPage:   $p->lastPage(),
+            totalItems:  $p->total(),
+            totalPages:  $p->lastPage(),
             lastItem:    $p->lastItem() ?? 0,
             hasNextPage: $p->hasMorePages(),
         );
@@ -34,8 +34,8 @@ final readonly class ApiPaginator
         return [
             'page'          => $this->page,
             'per_page'      => $this->perPage,
-            'total_item'    => $this->totalItem,
-            'total_page'    => $this->totalPage,
+            'total_items'   => $this->totalItems,
+            'total_pages'   => $this->totalPages,
             'last_item'     => $this->lastItem,
             'has_next_page' => $this->hasNextPage,
         ];
