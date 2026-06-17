@@ -87,12 +87,12 @@ final class ApiLogger implements TranslationLoggerInterface
 
     private function isThrowableEnabled(): bool
     {
-        return config('api_logging.is_throwable_enabled') === true;
+        return config('api_logging.log_throwable') === true;
     }
 
     private function isRenderedEnabled(): bool
     {
-        return config('api_logging.is_rendered_enabled') === true;
+        return config('api_logging.log_rendered') === true;
     }
 
     private function shouldLogThrowable(Throwable $e): bool

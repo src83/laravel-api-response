@@ -8,6 +8,7 @@ use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 return [
@@ -19,7 +20,7 @@ return [
     | When true, raw exceptions are logged via the 'api_throwable' channel
     | before being rendered. Filterable per environment via skipped_types.
     */
-    'is_throwable_enabled' => env('API_LOG_THROWABLE', true),
+    'log_throwable' => env('API_LOG_THROWABLE', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ return [
     | When true, the final rendered API error response is logged
     | via the 'api_rendered' channel. Filterable per environment via allowed_codes.
     */
-    'is_rendered_enabled' => env('API_LOG_RENDERED', true),
+    'log_rendered' => env('API_LOG_RENDERED', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,6 +39,15 @@ return [
     | Duplicate misses within a single request are deduplicated automatically.
     */
     'log_missing_translations' => env('API_LOG_MISSING_TRANSLATIONS', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Log Business Warnings
+    |--------------------------------------------------------------------------
+    | When true, business-level warnings are logged via the 'api_business' channel
+    | using BusinessLogger::warning().
+    */
+    'log_business_warnings' => env('API_LOG_BUSINESS_WARNINGS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -76,6 +86,7 @@ return [
                 MethodNotAllowedException::class,
                 BadRequestException::class,
                 TokenMismatchException::class,
+                UnprocessableEntityHttpException::class,
             ],
         ],
         'rendered' => [
