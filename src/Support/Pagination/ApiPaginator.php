@@ -9,10 +9,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 final readonly class ApiPaginator
 {
     public function __construct(
-        public int  $page,
+        public int  $currentPage,
         public int  $perPage,
         public int  $totalItems,
-        public int  $totalPages,
+        public int  $lastPage,
         public ?int $lastItem,
         public bool $hasNextPage,
     ) {}
@@ -20,10 +20,10 @@ final readonly class ApiPaginator
     public static function from(LengthAwarePaginator $p): self
     {
         return new self(
-            page:        $p->currentPage(),
+            currentPage: $p->currentPage(),
             perPage:     $p->perPage(),
             totalItems:  $p->total(),
-            totalPages:  $p->lastPage(),
+            lastPage:    $p->lastPage(),
             lastItem:    $p->lastItem() ?? 0,
             hasNextPage: $p->hasMorePages(),
         );
@@ -32,10 +32,10 @@ final readonly class ApiPaginator
     public function toArray(): array
     {
         return [
-            'page'          => $this->page,
+            'current_page'  => $this->currentPage,
             'per_page'      => $this->perPage,
             'total_items'   => $this->totalItems,
-            'total_pages'   => $this->totalPages,
+            'last_page'     => $this->lastPage,
             'last_item'     => $this->lastItem,
             'has_next_page' => $this->hasNextPage,
         ];
