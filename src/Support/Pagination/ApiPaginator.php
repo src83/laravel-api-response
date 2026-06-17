@@ -24,7 +24,7 @@ final readonly class ApiPaginator
             perPage:     $p->perPage(),
             totalItems:  $p->total(),
             lastPage:    $p->lastPage(),
-            lastItem:    $p->lastItem() ?? 0,
+            lastItem:    $p->lastItem(),
             hasNextPage: $p->hasMorePages(),
         );
     }
