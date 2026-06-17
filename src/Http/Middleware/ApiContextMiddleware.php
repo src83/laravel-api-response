@@ -20,7 +20,7 @@ class ApiContextMiddleware
         Log::shareContext([
             'env'        => app()->environment(),
             'request_id' => $requestId,
-            'user_id'    => optional($request->user())->id,
+            'user_id'    => $request->user()?->id,
             'ip'         => $request->ip(),
         ]);
 
