@@ -26,17 +26,17 @@ class ModuleResolver
         return null;
     }
 
-    protected static function isModuleEnabled(): bool
+    private static function isModuleEnabled(): bool
     {
         return config('api.is_module_available') === true;
     }
 
-    protected static function getDefaultModule(): ?string
+    private static function getDefaultModule(): ?string
     {
         return request()?->apiModule();
     }
 
-    protected static function normalize(?string $module): ?string
+    private static function normalize(?string $module): ?string
     {
         if ($module === null) {
             return null;
