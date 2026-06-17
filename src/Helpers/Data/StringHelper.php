@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Src83\LaravelApiResponse\Helpers\Data;
 
-class StringHelper
+final class StringHelper
 {
     public static function titleToSnakeCase(string $value): string
     {

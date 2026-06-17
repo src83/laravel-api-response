@@ -6,7 +6,7 @@ namespace Src83\LaravelApiResponse\Helpers\Lang;
 
 use Src83\LaravelApiResponse\Support\Resolvers\LocalizationResolver;
 
-class LocalizationHelper
+final class LocalizationHelper
 {
     /**
      * Поиск перевода по ключу с модулем. Если модули отключены — поиск по базовому ключу.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Src83\LaravelApiResponse\Support\Resolvers;
 
-class ModuleResolver
+final class ModuleResolver
 {
     /**
      * Возвращает модуль:

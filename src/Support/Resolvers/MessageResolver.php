@@ -8,7 +8,7 @@ use Src83\LaravelApiResponse\Enums\MessageKeyEnum;
 use Src83\LaravelApiResponse\Helpers\Lang\LocalizationHelper;
 use Src83\LaravelApiResponse\Support\Resolvers\DTO\ResolvedMessage;
 
-class MessageResolver
+final class MessageResolver
 {
     public static function resolve(string|MessageKeyEnum $messageKey, ?string $guiMessage): ResolvedMessage
     {
