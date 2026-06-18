@@ -45,6 +45,10 @@ use Throwable;
  */
 trait HandlesApiExceptions
 {
+    /**
+     * Report or log an exception.
+     * @throws Throwable
+     */
     public function report(Throwable $e): void
     {
         if (request()?->isApi()) {
@@ -54,148 +58,189 @@ trait HandlesApiExceptions
         parent::report($e);
     }
 
-    public function render($request, Throwable $e): JsonResponse|HttpResponse|Response
+    /**
+     * Render an exception into an HTTP response.
+     * @param Request $request
+     * @param Throwable $e
+     * @return Response|JsonResponse|HttpResponse
+     * @throws Throwable
+     */
+    public function render($request, Throwable $e): Response|JsonResponse|HttpResponse
     {
         if ($e instanceof TokenMismatchException) {
             return parent::render($request, $e);
         }
 
+        // API only: Обрабатываем все исключения в едином JSON-формате
         if ($request->isApi()) {
             $errorData = $this->handleApiException($request, $e);
             return ApiErrorResponse::make(...$errorData->toArray());
         }
 
+        // WEB only: стандартная HTML-страница ошибки
         return parent::render($request, $e);
     }
 
+    /**
+     * Единая обработка исключений для API / логика обработки и категоризация ошибок
+     */
     protected function handleApiException(Request $request, Throwable $e): ApiErrorDTO
     {
         $isDebug  = config('app.debug') === true;
         $isModule = config('api.is_module_available') === true;
+
         $module   = $isModule ? $request->apiModule() : null;
+
+        /** Именованные исключения */
 
         // 400: Bad Request
         if ($e instanceof BadRequestException || $e instanceof BadRequestHttpException) {
+
             $statusCode = HttpResponse::HTTP_BAD_REQUEST;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: StringHelper::titleToSnakeCase(Response::$statusTexts[$statusCode] ?? 'Bad Request'),
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 401: Unauthenticated
+        // 401: Authentication (unauthenticated) — Неаутентифицирован
         if ($e instanceof AuthenticationException) {
+
             $statusCode = HttpResponse::HTTP_UNAUTHORIZED;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: StringHelper::titleToSnakeCase(Response::$statusTexts[$statusCode] ?? 'Unauthorized'),
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 403: Forbidden
+        // 403: Authorization (forbidden) — Неавторизован (доступ запрещён)
         if ($e instanceof AuthorizationException ||
             $e instanceof AccessDeniedException || $e instanceof AccessDeniedHttpException ||
             $e instanceof UnauthorizedException || $e instanceof UnauthorizedHttpException) {
+
             $statusCode = HttpResponse::HTTP_FORBIDDEN;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: StringHelper::titleToSnakeCase(Response::$statusTexts[$statusCode] ?? 'Forbidden'),
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 404: Item not found
+        // 404: ItemNotFound — Запись не найдена
         if ($e instanceof ItemNotFoundException) {
+
             $statusCode = HttpResponse::HTTP_NOT_FOUND;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: 'item_not_found',
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 404: Model not found
+        // 404: ModelNotFound — Модель не найдена
         if ($e instanceof ModelNotFoundException) {
+
             $statusCode = HttpResponse::HTTP_NOT_FOUND;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: 'model_not_found',
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 404: Not found
+        // 404: NotFound — Не найдено
         if ($e instanceof NotFoundHttpException || $e instanceof NotFoundExceptionInterface) {
+
             $statusCode = HttpResponse::HTTP_NOT_FOUND;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: 'not_found',
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 405: Method not allowed
+        // 405: MethodNotAllowed — Метод не поддерживается
         if ($e instanceof MethodNotAllowedException || $e instanceof MethodNotAllowedHttpException) {
+
             $statusCode = HttpResponse::HTTP_METHOD_NOT_ALLOWED;
-            $details    = ($e instanceof MethodNotAllowedException)
+            $details = ($e instanceof MethodNotAllowedException)
                 ? ['allowed_methods' => implode(', ', $e->getAllowedMethods())]
                 : ['allowed_methods' => $e->getHeaders()['Allow'] ?? null];
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: 'method_not_allowed',
                 sysMessage: $e->getMessage() ?: null,
-                details:    $details,
+                details: $details,
             );
         }
 
-        // 409: Conflict
+        // 409: Conflict (Business Conflict)
         if ($e instanceof ConflictHttpException) {
+
             $statusCode = HttpResponse::HTTP_CONFLICT;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
-                messageKey: StringHelper::titleToSnakeCase(Response::$statusTexts[$statusCode] ?? 'Conflict'),
+                httpCode: $statusCode,
+                messageKey: 'conflict',
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 413: Content too large
+        // 413: Request Entity Too Large — Размер запроса превышает допустимый
         if ($e instanceof PostTooLargeException) {
+
             $statusCode = HttpResponse::HTTP_REQUEST_ENTITY_TOO_LARGE;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: 'content_too_large',
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 422: Validation error
+        // 422: Unprocessable content / Validation error — Ошибка валидации
         if ($e instanceof ValidationException) {
+
             $statusCode = HttpResponse::HTTP_UNPROCESSABLE_ENTITY;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: 'unprocessable_content',
                 sysMessage: $e->getMessage() ?: null,
-                details:    ['fields' => $e->errors()],
+                details: ['fields' => $e->errors()],
             );
         }
 
-        // 423: Locked
+        // 423: Locked — Ресурс заблокирован
         if ($e instanceof LockedHttpException) {
+
             $statusCode = HttpResponse::HTTP_LOCKED;
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
-                messageKey: StringHelper::titleToSnakeCase(Response::$statusTexts[$statusCode] ?? 'Locked'),
+                httpCode: $statusCode,
+                messageKey: 'locked',
                 sysMessage: $e->getMessage() ?: null,
             );
         }
 
-        // 4XX: Other HTTP exceptions
+        /** Неименованные исключения */
+
+        // 4XX: Остальные HttpException - Covers abort() and other such cases
         if ($e instanceof HttpExceptionInterface) {
+
             $statusCode = $e->getStatusCode();
+
             return new ApiErrorDTO(
-                httpCode:   $statusCode,
+                httpCode: $statusCode,
                 messageKey: StringHelper::titleToSnakeCase(Response::$statusTexts[$statusCode] ?? 'HTTP Error'),
                 sysMessage: $e->getMessage() ?: null,
             );
@@ -217,14 +262,15 @@ trait HandlesApiExceptions
                 'type'    => get_class($e),
                 'line'    => $e->getLine(),
                 'code'    => $e->getCode(),
+                #'trace' => $e->getTrace()[0],
             ],
         ] : null;
 
         return new ApiErrorDTO(
-            httpCode:   $statusCode,
+            httpCode: $statusCode,
             messageKey: StringHelper::titleToSnakeCase(Response::$statusTexts[$statusCode] ?? 'Internal Server Error'),
             sysMessage: $e->getMessage() ?: null,
-            details:    $details,
+            details: $details,
         );
     }
 }
