@@ -18,6 +18,12 @@ final class ApiSuccessResponse extends ApiResponse
      * @use ApiSuccessResponse::make($data, null, Response::HTTP_CREATED, MessageKeyEnum::CREATED)
      * @use ApiSuccessResponse::make($data, null, Response::HTTP_CREATED, MessageKeyEnum::CREATED, 'Created')
      * @use ApiSuccessResponse::make($data, null, Response::HTTP_OK, null, 'Done')
+     * @param mixed|null $data
+     * @param ApiPaginator|null $paginator
+     * @param int $httpCode
+     * @param string|MessageKeyEnum|null $messageKey
+     * @param string|null $guiMessage
+     * @return ApiResponse
      */
     public static function make(
         mixed $data = null,
