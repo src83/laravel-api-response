@@ -40,7 +40,7 @@ class WrapApiResponse
         }
 
         $content = $response->getOriginalContent();
-        $data    = $content ?? null;
+        $data = $content;
         $status = method_exists($response, 'getStatusCode')
             ? $response->getStatusCode()
             : Response::HTTP_OK;

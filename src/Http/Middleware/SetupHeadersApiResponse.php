@@ -16,8 +16,8 @@ class SetupHeadersApiResponse
      * Laravel автоматически определяет и устанавливает Content-Type: application/json для JsonResponse
      *
      * При необходимости можем через конфиг установить заголовок ответа Content-Type на тот, который
-     * запросили в Accept. Но при такой ручной установке Content-Type по Accept браузер ожидает не JOSN,
-     * но в данных приходит JOSN → Chrome выкидывает белый экран. Это всего лишь опция.
+     * запросили в Accept. Но при такой ручной установке Content-Type по Accept браузер ожидает не JSON,
+     * но в данных приходит JSON → Chrome выкидывает белый экран. Это всего лишь опция.
      *
      * @param Request $request
      * @param Closure $next
