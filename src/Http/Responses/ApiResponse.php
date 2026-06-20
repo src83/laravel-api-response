@@ -137,6 +137,7 @@ class ApiResponse extends JsonResponse
     {
         $method = substr($method, strrpos($method, '\\') + 1) . '()';
 
+        // Защита от ошибки конфигурации, кода в вызове передан неизвестный HTTP-код
         // Исключения перехватываются Handler-секцией "Default (5XX)"
         if (!isset(Response::$statusTexts[$httpCode])) {
             throw new InvalidArgumentException("Unknown HTTP code: {$httpCode} in {$method}");
