@@ -32,12 +32,17 @@ final class LocalizationHelperTest extends TestCase
             'api_results.unprocessable_content'      => 'Validation error',
         ], 'en');
 
+        $module  = 'test';
+        $baseKey = 'unprocessable_content';
+
         $loggerMock = Mockery::mock(TranslationLoggerInterface::class);
-        $loggerMock->expects('translationMissing')->never();
+        $loggerMock
+            ->expects('translationMissing')
+            ->never();  // Когда перевод найден -- лога быть не может
         $this->app->instance(TranslationLoggerInterface::class, $loggerMock);
 
-        $resolver   = app(LocalizationResolver::class);
-        $guiMessage = $resolver->getLocalizedMessage('test', 'unprocessable_content');
+        $resolver = app(LocalizationResolver::class);
+        $guiMessage = $resolver->getLocalizedMessage($module, $baseKey);
 
         $this->assertSame('Validation error [module: test]', $guiMessage);
     }
@@ -49,12 +54,18 @@ final class LocalizationHelperTest extends TestCase
             'api_results.unprocessable_content' => 'Validation error',
         ], 'en');
 
+        $module  = 'test';
+        $baseKey = 'unprocessable_content';
+
         $loggerMock = Mockery::mock(TranslationLoggerInterface::class);
-        $loggerMock->expects('translationMissing')->with(Mockery::type('array'))->once();
+        $loggerMock
+            ->expects('translationMissing')
+            ->with(Mockery::type('array'))
+            ->once();  // Когда модульный перевод не найден -- логируем один раз
         $this->app->instance(TranslationLoggerInterface::class, $loggerMock);
 
-        $resolver   = app(LocalizationResolver::class);
-        $guiMessage = $resolver->getLocalizedMessage('test', 'unprocessable_content');
+        $resolver = app(LocalizationResolver::class);
+        $guiMessage = $resolver->getLocalizedMessage($module, $baseKey);
 
         $this->assertSame('Validation error', $guiMessage);
     }
@@ -67,12 +78,18 @@ final class LocalizationHelperTest extends TestCase
             'api_results.unprocessable_content'      => 'Validation error',
         ], 'en');
 
+        $module  = 'test';
+        $baseKey = 'unknown_key';
+
         $loggerMock = Mockery::mock(TranslationLoggerInterface::class);
-        $loggerMock->expects('translationMissing')->with(Mockery::type('array'))->twice();
+        $loggerMock
+            ->expects('translationMissing')
+            ->with(Mockery::type('array'))
+            ->twice();  // Когда и модульный и базовый перевод не найден -- логируем два раза
         $this->app->instance(TranslationLoggerInterface::class, $loggerMock);
 
-        $resolver   = app(LocalizationResolver::class);
-        $guiMessage = $resolver->getLocalizedMessage('test', 'unknown_key');
+        $resolver = app(LocalizationResolver::class);
+        $guiMessage = $resolver->getLocalizedMessage($module, $baseKey);
 
         $this->assertSame('no_translation', $guiMessage);
     }
@@ -84,12 +101,17 @@ final class LocalizationHelperTest extends TestCase
             'api_results.unprocessable_content' => 'Validation error',
         ], 'en');
 
+        $module  = null;
+        $baseKey = 'unprocessable_content';
+
         $loggerMock = Mockery::mock(TranslationLoggerInterface::class);
-        $loggerMock->expects('translationMissing')->never();
+        $loggerMock
+            ->expects('translationMissing')
+            ->never();  // Когда перевод найден -- лога быть не может
         $this->app->instance(TranslationLoggerInterface::class, $loggerMock);
 
-        $resolver   = app(LocalizationResolver::class);
-        $guiMessage = $resolver->getLocalizedMessage(null, 'unprocessable_content');
+        $resolver = app(LocalizationResolver::class);
+        $guiMessage = $resolver->getLocalizedMessage($module, $baseKey);
 
         $this->assertSame('Validation error', $guiMessage);
     }
@@ -101,12 +123,18 @@ final class LocalizationHelperTest extends TestCase
             'api_results.unprocessable_content' => 'Validation error',
         ], 'en');
 
+        $module  = null;
+        $baseKey = 'unknown_key';
+
         $loggerMock = Mockery::mock(TranslationLoggerInterface::class);
-        $loggerMock->expects('translationMissing')->with(Mockery::type('array'))->once();
+        $loggerMock
+            ->expects('translationMissing')
+            ->with(Mockery::type('array'))
+            ->once();  // Когда базовый перевод не найден -- логируем один раз
         $this->app->instance(TranslationLoggerInterface::class, $loggerMock);
 
-        $resolver   = app(LocalizationResolver::class);
-        $guiMessage = $resolver->getLocalizedMessage(null, 'unknown_key');
+        $resolver = app(LocalizationResolver::class);
+        $guiMessage = $resolver->getLocalizedMessage($module, $baseKey);
 
         $this->assertSame('no_translation', $guiMessage);
     }
