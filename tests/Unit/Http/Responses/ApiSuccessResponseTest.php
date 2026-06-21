@@ -18,14 +18,16 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
+        $json = $response->getData(true);
+
         $this->assertSame([
-            'success'   => true,
+            'success' => true,
             'http_code' => 200,
             'http_text' => 'OK',
-            'message'   => null,
-            'meta'      => null,
-            'data'      => null,
-        ], $response->getData(true));
+            'message' => null,
+            'meta' => null,
+            'data' => null,
+        ], $json);
     }
 
     /** @test */
@@ -35,34 +37,38 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
+        $json = $response->getData(true);
+
         $this->assertSame([
-            'success'   => true,
+            'success' => true,
             'http_code' => 200,
             'http_text' => 'OK',
-            'message'   => null,
-            'meta'      => null,
-            'data'      => ['id' => 1],
-        ], $response->getData(true));
+            'message' => null,
+            'meta' => null,
+            'data' => ['id' => 1],
+        ], $json);
     }
 
     /** @test */
     public function it_returns_success_response_with_param_set2(): void
     {
         $response = ApiSuccessResponse::make(
-            data:     ['id' => 1],
+            data: ['id' => 1],
             httpCode: Response::HTTP_CREATED,
         );
 
         $this->assertSame(201, $response->getStatusCode());
 
+        $json = $response->getData(true);
+
         $this->assertSame([
-            'success'   => true,
+            'success' => true,
             'http_code' => 201,
             'http_text' => 'Created',
-            'message'   => null,
-            'meta'      => null,
-            'data'      => ['id' => 1],
-        ], $response->getData(true));
+            'message' => null,
+            'meta' => null,
+            'data' => ['id' => 1],
+        ], $json);
     }
 
     /** @test */
@@ -74,12 +80,18 @@ final class ApiSuccessResponseTest extends TestCase
             messageKey: MessageKeyEnum::CREATED,
         );
 
+        $this->assertSame(201, $response->getStatusCode());
+
         $json = $response->getData(true);
 
-        $this->assertSame(201, $response->getStatusCode());
         $this->assertTrue($json['success']);
+        $this->assertSame(201, $json['http_code']);
+        $this->assertSame('Created', $json['http_text']);
+
         $this->assertSame('created', $json['message']['key']);
         $this->assertNotEmpty($json['message']['gui']);
+        $this->assertIsString($json['message']['gui']);
+
         $this->assertSame(['id' => 1], $json['data']);
     }
 
@@ -132,8 +144,10 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertTrue($json['success']);
         $this->assertSame(200, $json['http_code']);
+        $this->assertSame('OK', $json['http_text']);
         $this->assertSame('updated', $json['message']['key']);
         $this->assertNotEmpty($json['message']['gui']);
+        $this->assertIsString($json['message']['gui']);
         $this->assertNull($json['data']);
     }
 

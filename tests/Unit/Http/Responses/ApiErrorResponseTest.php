@@ -18,13 +18,15 @@ final class ApiErrorResponseTest extends TestCase
 
         $this->assertSame(404, $response->getStatusCode());
 
+        $json = $response->getData(true);
+
         $this->assertSame([
-            'success'   => false,
+            'success' => false,
             'http_code' => 404,
             'http_text' => 'Not Found',
-            'message'   => null,
-            'details'   => null,
-        ], $response->getData(true));
+            'message' => null,
+            'details' => null,
+        ], $json);
     }
 
     /** @test */
@@ -32,13 +34,19 @@ final class ApiErrorResponseTest extends TestCase
     {
         $response = ApiErrorResponse::make(Response::HTTP_UNAUTHORIZED, MessageKeyEnum::UNAUTHORIZED);
 
+        $this->assertSame(401, $response->getStatusCode());
+
         $json = $response->getData(true);
 
-        $this->assertSame(401, $response->getStatusCode());
         $this->assertFalse($json['success']);
+        $this->assertSame(401, $json['http_code']);
+        $this->assertSame('Unauthorized', $json['http_text']);
+
         $this->assertSame('unauthorized', $json['message']['key']);
         $this->assertNotEmpty($json['message']['gui']);
+        $this->assertIsString($json['message']['gui']);
         $this->assertNull($json['message']['sys']);
+
         $this->assertNull($json['details']);
     }
 
@@ -46,16 +54,24 @@ final class ApiErrorResponseTest extends TestCase
     public function it_returns_error_response_with_param_set2(): void
     {
         $response = ApiErrorResponse::make(
-            httpCode:   Response::HTTP_UNAUTHORIZED,
+            httpCode: Response::HTTP_UNAUTHORIZED,
             messageKey: MessageKeyEnum::UNAUTHORIZED,
             sysMessage: 'Bad password',
         );
 
+        $this->assertSame(401, $response->getStatusCode());
+
         $json = $response->getData(true);
 
-        $this->assertSame(401, $response->getStatusCode());
+        $this->assertFalse($json['success']);
+        $this->assertSame(401, $json['http_code']);
+        $this->assertSame('Unauthorized', $json['http_text']);
+
         $this->assertSame('unauthorized', $json['message']['key']);
+        $this->assertNotEmpty($json['message']['gui']);
+        $this->assertIsString($json['message']['gui']);
         $this->assertSame('Bad password', $json['message']['sys']);
+
         $this->assertNull($json['details']);
     }
 
@@ -63,18 +79,25 @@ final class ApiErrorResponseTest extends TestCase
     public function it_returns_error_response_with_param_set3(): void
     {
         $response = ApiErrorResponse::make(
-            httpCode:   Response::HTTP_CONFLICT,
+            httpCode: Response::HTTP_CONFLICT,
             messageKey: 'test.conflict',
             sysMessage: 'Запись заблокирована бизнес-логикой',
-            details:    ['uid' => 123],
+            details: ['uid' => 123],
         );
+
+        $this->assertSame(409, $response->getStatusCode());
 
         $json = $response->getData(true);
 
-        $this->assertSame(409, $response->getStatusCode());
         $this->assertFalse($json['success']);
+        $this->assertSame(409, $json['http_code']);
+        $this->assertSame('Conflict', $json['http_text']);
+
         $this->assertSame('test.conflict', $json['message']['key']);
+        $this->assertNotEmpty($json['message']['gui']);
+        $this->assertIsString($json['message']['gui']);
         $this->assertSame('Запись заблокирована бизнес-логикой', $json['message']['sys']);
+
         $this->assertSame(['uid' => 123], $json['details']);
     }
 
@@ -82,17 +105,22 @@ final class ApiErrorResponseTest extends TestCase
     public function it_returns_error_response_with_sys_message_only(): void
     {
         $response = ApiErrorResponse::make(
-            httpCode:   500,
+            httpCode: 500,
             messageKey: null,
             sysMessage: 'Unexpected exception',
         );
 
         $this->assertSame(500, $response->getStatusCode());
 
+        $json = $response->getData(true);
+
+        $this->assertFalse($json['success']);
+        $this->assertSame(500, $json['http_code']);
+
         $this->assertSame([
             'key' => null,
             'gui' => null,
             'sys' => 'Unexpected exception',
-        ], $response->getData(true)['message']);
+        ], $json['message']);
     }
 }

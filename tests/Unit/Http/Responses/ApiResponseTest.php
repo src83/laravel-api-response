@@ -32,7 +32,9 @@ final class ApiResponseTest extends TestCase
     /** @test */
     public function it_returns_success_response_with_data(): void
     {
-        $response = ApiResponse::success(['id' => 1]);
+        $data = ['id' => 1];
+
+        $response = ApiResponse::success($data);
 
         $this->assertSame(200, $response->getStatusCode());
 

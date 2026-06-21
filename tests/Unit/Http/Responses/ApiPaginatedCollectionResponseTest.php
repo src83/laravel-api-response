@@ -19,15 +19,26 @@ final class ApiPaginatedCollectionResponseTest extends TestCase
             ['id' => 3, 'name' => 'Test Model 03'],
         ];
 
-        $paginator = ArrayPaginator::paginate(collect($items), perPage: 2, page: 1);
-        $response  = ApiPaginatedCollectionResponse::fromPaginator($paginator);
+        $page    = 1;
+        $perPage = 2;
+
+        // ------------------
+
+        $data = collect($items);
+
+        $paginator = ArrayPaginator::paginate($data, $perPage, $page);
+
+        $response = ApiPaginatedCollectionResponse::fromPaginator($paginator);
 
         $this->assertSame(200, $response->getStatusCode());
 
         $json = $response->getData(true);
 
+        // ------------------
+
         $this->assertTrue($json['success']);
         $this->assertArrayHasKey('data', $json);
+        $this->assertArrayHasKey('meta', $json);
         $this->assertArrayHasKey('paginator', $json['meta']);
 
         $this->assertSame([
@@ -48,14 +59,28 @@ final class ApiPaginatedCollectionResponseTest extends TestCase
     /** @test */
     public function it_checks_data_meta_paginator_without_input_data(): void
     {
-        $paginator = ArrayPaginator::paginate(collect([]), perPage: 2, page: 1);
-        $response  = ApiPaginatedCollectionResponse::fromPaginator($paginator);
+        $items = [];
+
+        $page    = 1;
+        $perPage = 2;
+
+        // ------------------
+
+        $data = collect($items);
+
+        $paginator = ArrayPaginator::paginate($data, $perPage, $page);
+
+        $response = ApiPaginatedCollectionResponse::fromPaginator($paginator);
 
         $this->assertSame(200, $response->getStatusCode());
 
         $json = $response->getData(true);
 
+        // ------------------
+
         $this->assertTrue($json['success']);
+        $this->assertArrayHasKey('data', $json);
+        $this->assertArrayHasKey('meta', $json);
         $this->assertArrayHasKey('paginator', $json['meta']);
 
         $this->assertSame([
