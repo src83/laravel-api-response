@@ -16,8 +16,13 @@ final class MessageResolverTest extends TestCase
     {
         config(['api.is_module_available' => false]);
 
-        $resolved = MessageResolver::resolve(MessageKeyEnum::CREATED, null);
+        // given
+        $messageKey = MessageKeyEnum::CREATED;
 
+        // when
+        $resolved = MessageResolver::resolve($messageKey, null);
+
+        // then
         $this->assertSame('created', $resolved->messageKey);
         $this->assertNull($resolved->module);
         $this->assertSame('created', $resolved->baseKey);
@@ -29,8 +34,13 @@ final class MessageResolverTest extends TestCase
     {
         config(['api.is_module_available' => false]);
 
-        $resolved = MessageResolver::resolve('users.created', null);
+        // given
+        $messageKey = 'users.created';
 
+        // when
+        $resolved = MessageResolver::resolve($messageKey, null);
+
+        // then
         $this->assertSame('users.created', $resolved->messageKey);
         $this->assertSame('users', $resolved->module);
         $this->assertSame('created', $resolved->baseKey);
@@ -42,12 +52,17 @@ final class MessageResolverTest extends TestCase
     {
         config(['api.is_module_available' => true]);
 
+        // given
+        $messageKey = MessageKeyEnum::CREATED;
+
         $request = Request::create('/api/something', 'GET');
         $request::macro('apiModule', fn () => 'auth');
         $this->app->instance('request', $request);
 
-        $resolved = MessageResolver::resolve(MessageKeyEnum::CREATED, null);
+        // when
+        $resolved = MessageResolver::resolve($messageKey, null);
 
+        // then
         $this->assertSame('auth.created', $resolved->messageKey);
         $this->assertSame('auth', $resolved->module);
         $this->assertSame('created', $resolved->baseKey);
@@ -59,12 +74,17 @@ final class MessageResolverTest extends TestCase
     {
         config(['api.is_module_available' => true]);
 
+        // given
+        $messageKey = 'users.created';
+
         $request = Request::create('/api/something', 'GET');
         $request::macro('apiModule', fn () => 'auth');
         $this->app->instance('request', $request);
 
-        $resolved = MessageResolver::resolve('users.created', null);
+        // when
+        $resolved = MessageResolver::resolve($messageKey, null);
 
+        // then
         $this->assertSame('users.created', $resolved->messageKey);
         $this->assertSame('users', $resolved->module);
         $this->assertSame('created', $resolved->baseKey);
@@ -74,10 +94,14 @@ final class MessageResolverTest extends TestCase
     /** @test */
     public function it_does_not_override_gui_message_when_user_provided_it(): void
     {
+        // given
+        $messageKey = MessageKeyEnum::UPDATED;
         $guiMessage = 'Everything is shiny captain!';
 
-        $resolved = MessageResolver::resolve(MessageKeyEnum::UPDATED, $guiMessage);
+        // when
+        $resolved = MessageResolver::resolve($messageKey, $guiMessage);
 
+        // then
         $this->assertSame('updated', $resolved->messageKey);
         $this->assertSame($guiMessage, $resolved->guiMessage);
     }
@@ -85,8 +109,13 @@ final class MessageResolverTest extends TestCase
     /** @test */
     public function it_handles_empty_localization(): void
     {
-        $resolved = MessageResolver::resolve('rechecked', null);
+        // given
+        $messageKey = 'rechecked';
 
+        // when
+        $resolved = MessageResolver::resolve($messageKey, null);
+
+        // then
         $this->assertSame('no_translation', $resolved->guiMessage);
     }
 
@@ -95,12 +124,17 @@ final class MessageResolverTest extends TestCase
     {
         config(['api.is_module_available' => true]);
 
+        // given
+        $messageKey = '.created';
+
         $request = Request::create('/api/something', 'GET');
         $request::macro('apiModule', fn () => 'auth');
         $this->app->instance('request', $request);
 
-        $resolved = MessageResolver::resolve('.created', null);
+        // when
+        $resolved = MessageResolver::resolve($messageKey, null);
 
+        // then
         $this->assertSame('created', $resolved->messageKey);
         $this->assertNull($resolved->module);
         $this->assertSame('created', $resolved->baseKey);

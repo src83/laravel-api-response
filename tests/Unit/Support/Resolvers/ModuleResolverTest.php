@@ -11,17 +11,17 @@ use Src83\LaravelApiResponse\Tests\TestCase;
 
 final class ModuleResolverTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->app->instance('request', Request::create('/test', 'GET'));
-    }
-
     protected function tearDown(): void
     {
         Request::flushMacros();
         Mockery::close();
         parent::tearDown();
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->app->instance('request', Request::create('/test', 'GET'));
     }
 
     /** @test */
@@ -82,10 +82,18 @@ final class ModuleResolverTest extends TestCase
         $this->assertNull($result);
     }
 
+    /**
+     * Инжектим макрос в запрос:
+     * - создаём Request с рандомным URI, близким к реальному
+     * - добавляем к нему macro apiModule() с заданным значением
+     * - итоговый запрос кладём в контейнер чтобы он отдавал нужный request
+     */
     private function mockRequestModule(?string $module): void
     {
         $request = Request::create('/api/test', 'GET');
+
         $request::macro('apiModule', fn () => $module);
+
         $this->app->instance('request', $request);
     }
 }
