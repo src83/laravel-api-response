@@ -12,6 +12,7 @@ final class ApiPaginatorTest extends TestCase
 {
     public function test_it_creates_api_paginator_from_length_aware_paginator(): void
     {
+        // Arrange
         $items = collect([
             ['id' => 1],
             ['id' => 2],
@@ -25,8 +26,10 @@ final class ApiPaginatorTest extends TestCase
             currentPage: 2,
         );
 
+        // Act
         $apiPaginator = ApiPaginator::from($laravelPaginator);
 
+        // Assert (DTO values)
         $this->assertSame(2, $apiPaginator->currentPage);
         $this->assertSame(3, $apiPaginator->perPage);
         $this->assertSame(9, $apiPaginator->totalItems);
@@ -37,6 +40,7 @@ final class ApiPaginatorTest extends TestCase
 
     public function test_it_serializes_to_array_correctly(): void
     {
+        // Arrange
         $paginator = new ApiPaginator(
             currentPage: 1,
             perPage: 10,
@@ -46,8 +50,10 @@ final class ApiPaginatorTest extends TestCase
             hasNextPage: true,
         );
 
+        // Act
         $array = $paginator->toArray();
 
+        // Assert
         $this->assertSame([
             'current_page'  => 1,
             'per_page'      => 10,
