@@ -41,6 +41,8 @@ final class ApiLogger implements TranslationLoggerInterface
         $this->storeThrowableEvent($e);
     }
 
+    // -----------------------------
+
     public function captureRenderedError(ApiRenderedErrorDTO $responseData): void
     {
         if (!$this->isRenderedEnabled()) {
@@ -54,36 +56,8 @@ final class ApiLogger implements TranslationLoggerInterface
         $this->storeRenderedEvent($responseData);
     }
 
-    public function translationMissing(array $context): void
-    {
-        if (!config('api_logging.log_missing_translations')) {
-            return;
-        }
 
-        $fingerprint = implode('|', [
-            $context['locale']   ?? '',
-            $context['module']   ?? '',
-            $context['key']      ?? '',
-            $context['level']    ?? '',
-            $context['strategy'] ?? '',
-        ]);
-
-        if (isset(self::$loggedTranslationMisses[$fingerprint])) {
-            return;
-        }
-
-        self::$loggedTranslationMisses[$fingerprint] = true;
-
-        Log::channel('api_missing_translations')
-            ->warning('API translation missing', [
-                'locale'   => $context['locale']   ?? null,
-                'module'   => $context['module']   ?? null,
-                'key'      => $context['key']      ?? null,
-                'level'    => $context['level']    ?? null,
-                'strategy' => $context['strategy'] ?? null,
-                'env'      => app()->environment(),
-            ]);
-    }
+    // ==========================================================================
 
     private function isThrowableEnabled(): bool
     {
@@ -94,6 +68,8 @@ final class ApiLogger implements TranslationLoggerInterface
     {
         return config('api_logging.log_rendered') === true;
     }
+
+    // ==========================================================================
 
     private function shouldLogThrowable(Throwable $e): bool
     {
@@ -139,6 +115,41 @@ final class ApiLogger implements TranslationLoggerInterface
                 'stage'    => 'api_rendered',
                 'request'  => $this->request,
                 'response' => $responseData->toArray(),
+            ]);
+    }
+
+    // ==========================================================================
+
+    public function translationMissing(array $context): void
+    {
+        if (!config('api_logging.log_missing_translations')) {
+            return;
+        }
+
+        // --- защита от дублей ---
+        $fingerprint = implode('|', [
+            $context['locale'] ?? '',
+            $context['module'] ?? '',
+            $context['key'] ?? '',
+            $context['level'] ?? '',
+            $context['strategy'] ?? '',
+        ]);
+
+        if (isset(self::$loggedTranslationMisses[$fingerprint])) {
+            return;
+        }
+
+        self::$loggedTranslationMisses[$fingerprint] = true;
+        // --- конец защиты ---
+
+        Log::channel('api_missing_translations')
+            ->warning('API translation missing', [
+                'locale'   => $context['locale'] ?? null,
+                'module'   => $context['module'] ?? null,
+                'key'      => $context['key'] ?? null,
+                'level'    => $context['level'] ?? null,
+                'strategy' => $context['strategy'] ?? null,
+                'env'      => app()->environment(),
             ]);
     }
 }
