@@ -41,13 +41,14 @@ class ApiResponseServiceProvider extends ServiceProvider
     {
         Request::macro('isApi', function (): bool {
             /** @var \Illuminate\Http\Request $this */
-            $path      = $this->path();
+            $path = $this->path();
             $isApiPath = str_starts_with($path, 'api') && (strlen($path) === 3 || $path[3] === '/');
 
-            return $isApiPath
-                || $this->expectsJson()
-                || $this->bearerToken() !== null
-                || ($this->hasCookie('XSRF-TOKEN') && $this->hasHeader('X-XSRF-TOKEN'));
+            $expectsJson = $this->expectsJson();
+            $hasBearerToken = $this->bearerToken() !== null;
+            $hasSanctumCookie = $this->hasCookie('XSRF-TOKEN') && $this->hasHeader('X-XSRF-TOKEN');
+
+            return $isApiPath || $expectsJson || $hasBearerToken || $hasSanctumCookie;
         });
 
         Request::macro('apiModule', function (): ?string {
