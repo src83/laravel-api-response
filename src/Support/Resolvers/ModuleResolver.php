@@ -20,22 +20,26 @@ final class ModuleResolver
 
         if (self::isModuleEnabled()) {
             $module = self::getDefaultModule();
-            return self::normalize($module);
+            $module = self::normalize($module);
+            return $module;
         }
 
         return null;
     }
 
+    // Проверяет включена ли модульная система API
     private static function isModuleEnabled(): bool
     {
         return config('api.is_module_available') === true;
     }
 
+    // Извлекает модуль по умолчанию из текущего запроса (см. 'apiModule' в ApiServiceProvider)
     private static function getDefaultModule(): ?string
     {
         return request()?->apiModule();
     }
 
+    // Поиск алиаса модуля
     private static function normalize(?string $module): ?string
     {
         if ($module === null) {
