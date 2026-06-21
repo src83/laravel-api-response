@@ -262,7 +262,6 @@ trait HandlesApiExceptions
                 'type'    => get_class($e),
                 'line'    => $e->getLine(),
                 'code'    => $e->getCode(),
-                #'trace' => $e->getTrace()[0],
             ],
         ] : null;
 
