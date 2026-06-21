@@ -7,6 +7,10 @@ namespace Src83\LaravelApiResponse\Tests\Feature;
 use Illuminate\Http\Request;
 use Src83\LaravelApiResponse\Tests\TestCase;
 
+/**
+ * Проверяется корректность определения модуля: "ресурс" || "ресурс_действие"
+ * php artisan test --filter=RequestApiModuleTest
+ */
 final class RequestApiModuleTest extends TestCase
 {
     /** @test */

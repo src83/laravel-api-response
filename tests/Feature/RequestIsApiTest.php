@@ -7,6 +7,11 @@ namespace Src83\LaravelApiResponse\Tests\Feature;
 use Illuminate\Http\Request;
 use Src83\LaravelApiResponse\Tests\TestCase;
 
+/**
+ * Feature-тест макроса isApi()
+ * Проверяются все ключевые сценарии: API-путь, заголовки JSON, Bearer-токен и Sanctum-cookie.
+ * php artisan test --filter=RequestIsApiTest
+ */
 final class RequestIsApiTest extends TestCase
 {
     /** @test */
