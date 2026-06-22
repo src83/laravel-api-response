@@ -6,6 +6,7 @@ namespace Src83\LaravelApiResponse\Tests\Feature;
 
 use Illuminate\Http\Request;
 use Src83\LaravelApiResponse\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Feature-тест макроса isApi()
@@ -14,14 +15,14 @@ use Src83\LaravelApiResponse\Tests\TestCase;
  */
 final class RequestIsApiTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_detects_api_path(): void
     {
         $request = Request::create('/api/users', 'GET');
         $this->assertTrue($request->isApi());
     }
 
-    /** @test */
+    #[Test]
     public function it_detects_accept_json_header(): void
     {
         $request = Request::create('/profile', 'GET', [], [], [], [
@@ -31,7 +32,7 @@ final class RequestIsApiTest extends TestCase
         $this->assertTrue($request->isApi());
     }
 
-    /** @test */
+    #[Test]
     public function it_detects_bearer_token(): void
     {
         $request = Request::create('/user', 'GET', [], [], [], [
@@ -41,7 +42,7 @@ final class RequestIsApiTest extends TestCase
         $this->assertTrue($request->isApi());
     }
 
-    /** @test */
+    #[Test]
     public function it_detects_sanctum_cookie(): void
     {
         $request = Request::create('/user', 'GET', [], [
@@ -53,7 +54,7 @@ final class RequestIsApiTest extends TestCase
         $this->assertTrue($request->isApi());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_false_for_web_request(): void
     {
         $request = Request::create('/dashboard', 'GET');

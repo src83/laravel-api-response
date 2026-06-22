@@ -8,10 +8,11 @@ use Src83\LaravelApiResponse\Enums\MessageKeyEnum;
 use Src83\LaravelApiResponse\Http\Responses\ApiSuccessResponse;
 use Src83\LaravelApiResponse\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ApiSuccessResponseTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set0(): void
     {
         $response = ApiSuccessResponse::make();
@@ -30,7 +31,7 @@ final class ApiSuccessResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set1(): void
     {
         $response = ApiSuccessResponse::make(['id' => 1]);
@@ -49,7 +50,7 @@ final class ApiSuccessResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set2(): void
     {
         $response = ApiSuccessResponse::make(
@@ -71,7 +72,7 @@ final class ApiSuccessResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set3(): void
     {
         $response = ApiSuccessResponse::make(
@@ -95,7 +96,7 @@ final class ApiSuccessResponseTest extends TestCase
         $this->assertSame(['id' => 1], $json['data']);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set4(): void
     {
         $response = ApiSuccessResponse::make(
@@ -122,7 +123,7 @@ final class ApiSuccessResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set5(): void
     {
         $response = ApiSuccessResponse::make(
@@ -149,7 +150,7 @@ final class ApiSuccessResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set6(): void
     {
         $response = ApiSuccessResponse::make(
@@ -171,7 +172,7 @@ final class ApiSuccessResponseTest extends TestCase
         $this->assertNull($json['data']);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set7(): void
     {
         $response = ApiSuccessResponse::make(
@@ -196,7 +197,7 @@ final class ApiSuccessResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_param_set8(): void
     {
         $response = ApiSuccessResponse::make(

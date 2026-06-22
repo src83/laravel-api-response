@@ -9,6 +9,7 @@ use Mockery;
 use Src83\LaravelApiResponse\Support\Logging\TranslationLoggerInterface;
 use Src83\LaravelApiResponse\Support\Resolvers\LocalizationResolver;
 use Src83\LaravelApiResponse\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class LocalizationHelperTest extends TestCase
 {
@@ -24,7 +25,7 @@ final class LocalizationHelperTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function T1_module_and_baseKey_found_translation_by_both_no_log(): void
     {
         Lang::addLines([
@@ -47,7 +48,7 @@ final class LocalizationHelperTest extends TestCase
         $this->assertSame('Validation error [module: test]', $guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function T2_module_and_baseKey_found_translation_just_by_baseKey_log_1_time(): void
     {
         Lang::addLines([
@@ -70,7 +71,7 @@ final class LocalizationHelperTest extends TestCase
         $this->assertSame('Validation error', $guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function T3_module_and_baseKey_not_found_translation_log_2_times(): void
     {
         Lang::addLines([
@@ -94,7 +95,7 @@ final class LocalizationHelperTest extends TestCase
         $this->assertSame('no_translation', $guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function T4_baseKey_found_translation_by_baseKey_no_log(): void
     {
         Lang::addLines([
@@ -116,7 +117,7 @@ final class LocalizationHelperTest extends TestCase
         $this->assertSame('Validation error', $guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function T5_baseKey_not_found_translation_log_1_time(): void
     {
         Lang::addLines([

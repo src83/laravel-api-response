@@ -8,10 +8,11 @@ use Src83\LaravelApiResponse\Enums\MessageKeyEnum;
 use Src83\LaravelApiResponse\Http\Responses\ApiErrorResponse;
 use Src83\LaravelApiResponse\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ApiErrorResponseTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_returns_error_response_with_param_set0(): void
     {
         $response = ApiErrorResponse::make(Response::HTTP_NOT_FOUND);
@@ -29,7 +30,7 @@ final class ApiErrorResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_error_response_with_param_set1(): void
     {
         $response = ApiErrorResponse::make(Response::HTTP_UNAUTHORIZED, MessageKeyEnum::UNAUTHORIZED);
@@ -50,7 +51,7 @@ final class ApiErrorResponseTest extends TestCase
         $this->assertNull($json['details']);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_error_response_with_param_set2(): void
     {
         $response = ApiErrorResponse::make(
@@ -75,7 +76,7 @@ final class ApiErrorResponseTest extends TestCase
         $this->assertNull($json['details']);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_error_response_with_param_set3(): void
     {
         $response = ApiErrorResponse::make(
@@ -101,7 +102,7 @@ final class ApiErrorResponseTest extends TestCase
         $this->assertSame(['uid' => 123], $json['details']);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_error_response_with_sys_message_only(): void
     {
         $response = ApiErrorResponse::make(

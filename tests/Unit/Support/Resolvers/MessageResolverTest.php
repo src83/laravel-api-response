@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 use Src83\LaravelApiResponse\Enums\MessageKeyEnum;
 use Src83\LaravelApiResponse\Support\Resolvers\MessageResolver;
 use Src83\LaravelApiResponse\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class MessageResolverTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_resolves_module_for_simple_key_to_null_when_modules_not_allowed(): void
     {
         config(['api.is_module_available' => false]);
@@ -29,7 +30,7 @@ final class MessageResolverTest extends TestCase
         $this->assertIsString($resolved->guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function it_resolves_module_for_composite_key_from_prefix_when_modules_not_allowed(): void
     {
         config(['api.is_module_available' => false]);
@@ -47,7 +48,7 @@ final class MessageResolverTest extends TestCase
         $this->assertIsString($resolved->guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function it_resolves_module_for_simple_key_from_request_when_modules_allowed(): void
     {
         config(['api.is_module_available' => true]);
@@ -69,7 +70,7 @@ final class MessageResolverTest extends TestCase
         $this->assertIsString($resolved->guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function it_resolves_module_for_composite_key_from_prefix_when_modules_allowed(): void
     {
         config(['api.is_module_available' => true]);
@@ -91,7 +92,7 @@ final class MessageResolverTest extends TestCase
         $this->assertIsString($resolved->guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_override_gui_message_when_user_provided_it(): void
     {
         // given
@@ -106,7 +107,7 @@ final class MessageResolverTest extends TestCase
         $this->assertSame($guiMessage, $resolved->guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_empty_localization(): void
     {
         // given
@@ -119,7 +120,7 @@ final class MessageResolverTest extends TestCase
         $this->assertSame('no_translation', $resolved->guiMessage);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_default_module_when_message_key_starts_with_dot(): void
     {
         config(['api.is_module_available' => true]);

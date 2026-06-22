@@ -6,10 +6,11 @@ namespace Src83\LaravelApiResponse\Tests\Unit\Support\Resolvers;
 
 use PHPUnit\Framework\TestCase;
 use Src83\LaravelApiResponse\Support\Resolvers\MessageResolver;
+use PHPUnit\Framework\Attributes\Test;
 
 final class MessageResolverSplitTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_returns_null_prefix_for_null_key(): void
     {
         [$prefix, $baseKey, $ignoreDefaultModule] = MessageResolver::split(null);
@@ -19,7 +20,7 @@ final class MessageResolverSplitTest extends TestCase
         $this->assertFalse($ignoreDefaultModule);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_null_prefix_for_simple_key(): void
     {
         [$prefix, $baseKey, $ignoreDefaultModule] = MessageResolver::split('created');
@@ -29,7 +30,7 @@ final class MessageResolverSplitTest extends TestCase
         $this->assertFalse($ignoreDefaultModule);
     }
 
-    /** @test */
+    #[Test]
     public function it_splits_composite_key_by_first_dot(): void
     {
         [$prefix, $baseKey, $ignoreDefaultModule] = MessageResolver::split('users.created');
@@ -39,7 +40,7 @@ final class MessageResolverSplitTest extends TestCase
         $this->assertFalse($ignoreDefaultModule);
     }
 
-    /** @test */
+    #[Test]
     public function it_splits_only_by_first_dot_when_multiple_dots_present(): void
     {
         [$prefix, $baseKey, $ignoreDefaultModule] = MessageResolver::split('users.sub.created');
@@ -49,7 +50,7 @@ final class MessageResolverSplitTest extends TestCase
         $this->assertFalse($ignoreDefaultModule);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_leading_dot(): void
     {
         [$prefix, $baseKey, $ignoreDefaultModule] = MessageResolver::split('.created');
@@ -59,7 +60,7 @@ final class MessageResolverSplitTest extends TestCase
         $this->assertTrue($ignoreDefaultModule);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_trailing_dot(): void
     {
         [$prefix, $baseKey, $ignoreDefaultModule] = MessageResolver::split('users.');

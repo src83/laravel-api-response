@@ -7,10 +7,11 @@ namespace Src83\LaravelApiResponse\Tests\Unit\Http\Responses;
 use InvalidArgumentException;
 use Src83\LaravelApiResponse\Http\Responses\ApiResponse;
 use Src83\LaravelApiResponse\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ApiResponseTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_default_structure(): void
     {
         $response = ApiResponse::success();
@@ -29,7 +30,7 @@ final class ApiResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_with_data(): void
     {
         $data = ['id' => 1];
@@ -50,7 +51,7 @@ final class ApiResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_success_response_includes_message_container_with_data(): void
     {
         $response = ApiResponse::success(
@@ -75,7 +76,7 @@ final class ApiResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_error_response_with_default_structure(): void
     {
         $response = ApiResponse::error(404);
@@ -93,7 +94,7 @@ final class ApiResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_includes_message_and_details_when_provided(): void
     {
         $response = ApiResponse::error(
@@ -119,7 +120,7 @@ final class ApiResponseTest extends TestCase
         ], $json);
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_exception_for_unknown_http_code(): void
     {
         $this->expectException(InvalidArgumentException::class);

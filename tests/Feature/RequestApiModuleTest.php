@@ -6,6 +6,7 @@ namespace Src83\LaravelApiResponse\Tests\Feature;
 
 use Illuminate\Http\Request;
 use Src83\LaravelApiResponse\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Проверяется корректность определения модуля: "ресурс" || "ресурс_действие"
@@ -13,7 +14,7 @@ use Src83\LaravelApiResponse\Tests\TestCase;
  */
 final class RequestApiModuleTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_detects_api_module_from_path(): void
     {
         $request = Request::create('/api', 'GET');

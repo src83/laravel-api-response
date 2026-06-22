@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Mockery;
 use Src83\LaravelApiResponse\Support\Resolvers\ModuleResolver;
 use Src83\LaravelApiResponse\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ModuleResolverTest extends TestCase
 {
@@ -24,7 +25,7 @@ final class ModuleResolverTest extends TestCase
         $this->app->instance('request', Request::create('/test', 'GET'));
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_prefix_even_if_modules_are_disabled(): void
     {
         config(['api.is_module_available' => false]);
@@ -34,7 +35,7 @@ final class ModuleResolverTest extends TestCase
         $this->assertSame('users', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_prefix_even_if_modules_are_enabled(): void
     {
         config(['api.is_module_available' => true]);
@@ -46,7 +47,7 @@ final class ModuleResolverTest extends TestCase
         $this->assertSame('users', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_null_when_modules_are_disabled_and_prefix_is_null(): void
     {
         config(['api.is_module_available' => false]);
@@ -58,7 +59,7 @@ final class ModuleResolverTest extends TestCase
         $this->assertNull($result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_request_module_when_modules_are_enabled_and_prefix_is_null(): void
     {
         config(['api.is_module_available' => true]);
@@ -70,7 +71,7 @@ final class ModuleResolverTest extends TestCase
         $this->assertSame('admin', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_null_when_modules_are_enabled_but_request_has_no_module(): void
     {
         config(['api.is_module_available' => true]);

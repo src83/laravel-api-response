@@ -7,10 +7,11 @@ namespace Src83\LaravelApiResponse\Tests\Unit\Http\Responses;
 use Src83\LaravelApiResponse\Http\Responses\ApiPaginatedCollectionResponse;
 use Src83\LaravelApiResponse\Support\Pagination\ArrayPaginator;
 use Src83\LaravelApiResponse\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ApiPaginatedCollectionResponseTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_checks_data_meta_paginator_with_input_data(): void
     {
         $items = [
@@ -56,7 +57,7 @@ final class ApiPaginatedCollectionResponseTest extends TestCase
         ], $json['data']);
     }
 
-    /** @test */
+    #[Test]
     public function it_checks_data_meta_paginator_without_input_data(): void
     {
         $items = [];
