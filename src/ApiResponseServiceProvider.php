@@ -33,6 +33,7 @@ class ApiResponseServiceProvider extends ServiceProvider
 
             $this->publishes([
                 __DIR__ . '/../stubs/Handler.stub'              => app_path('Exceptions/Handler.php'),
+                __DIR__ . '/../stubs/Authenticate.stub'         => app_path('Http/Middleware/Authenticate.php'),
                 __DIR__ . '/../stubs/ExceptionHandlerTest.stub' => base_path('tests/Feature/Api/ExceptionHandlerTest.php'),
             ], 'api-response-stubs');
         }
