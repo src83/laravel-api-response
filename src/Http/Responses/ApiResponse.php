@@ -137,12 +137,19 @@ class ApiResponse extends JsonResponse
     {
         $method = substr($method, strrpos($method, '\\') + 1) . '()';
 
-        // Защита от ошибки конфигурации, кода в вызове передан неизвестный HTTP-код
-        // Исключения перехватываются Handler-секцией "Default (5XX)"
-        if (!isset(Response::$statusTexts[$httpCode])) {
-            throw new InvalidArgumentException("Unknown HTTP code: {$httpCode} in {$method}");
+        // Framework-specific codes not present in Symfony's list
+        $extended = [419 => 'Page Expired'];
+
+        if (isset(Response::$statusTexts[$httpCode])) {
+            return Response::$statusTexts[$httpCode];
         }
 
-        return Response::$statusTexts[$httpCode];
+        if (isset($extended[$httpCode])) {
+            return $extended[$httpCode];
+        }
+
+        // Guard against misconfiguration when an unknown HTTP code is passed in a call
+        // Exceptions are caught by the "5XX Default" Handler section
+        throw new InvalidArgumentException("Unknown HTTP code: {$httpCode} in {$method}");
     }
 }
