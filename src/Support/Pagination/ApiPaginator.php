@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Src83\LaravelApiResponse\Support\Pagination;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 final readonly class ApiPaginator
 {
