@@ -6,6 +6,7 @@ namespace Src83\LaravelApiResponse;
 
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
+use Src83\LaravelApiResponse\Console\Commands\InstallCommand;
 use Src83\LaravelApiResponse\Support\Logging\ApiLogger;
 use Src83\LaravelApiResponse\Support\Logging\TranslationLoggerInterface;
 
@@ -22,13 +23,16 @@ class ApiResponseServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
+            $this->commands([InstallCommand::class]);
+
             $this->publishes([
                 __DIR__ . '/../config/api.php'         => config_path('api.php'),
                 __DIR__ . '/../config/api_logging.php' => config_path('api_logging.php'),
             ], 'api-response-config');
 
             $this->publishes([
-                __DIR__ . '/../lang' => lang_path('vendor/api-response'),
+                __DIR__ . '/../lang/en' => lang_path('en'),
+                __DIR__ . '/../lang/ru' => lang_path('ru'),
             ], 'api-response-lang');
 
             $this->publishes([
@@ -37,8 +41,6 @@ class ApiResponseServiceProvider extends ServiceProvider
                 __DIR__ . '/../stubs/ExceptionHandlerTest.stub' => base_path('tests/Feature/Api/ExceptionHandlerTest.php'),
             ], 'api-response-stubs');
         }
-
-        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'api-response');
 
         $this->registerRequestMacros();
     }

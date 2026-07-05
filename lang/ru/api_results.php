@@ -8,7 +8,7 @@
 // RU
 return [
 
-    // Success — Action-Based
+    // Action-Based Success Messages
 
     'ok'          => 'Ok',
     'success'     => 'Успешно',
@@ -49,7 +49,7 @@ return [
     'assigned'    => 'Назначено',
     'unassigned'  => 'Снято назначение',
 
-    // Errors — HTTP
+    // HTTP Error Messages
 
     'http_error'            => 'HTTP Error',
 
@@ -65,5 +65,7 @@ return [
     'unprocessable_content' => 'Ошибка валидации',  // 422
     'locked'                => 'Ресурс заблокирован',  // 423
     'internal_server_error' => 'Внутренняя ошибка сервера',  // 500
+
+    // Error Messages by Modules (check documentation)
 
 ];

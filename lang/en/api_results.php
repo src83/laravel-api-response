@@ -8,7 +8,7 @@
 // EN
 return [
 
-    // Success — Action-Based
+    // Action-Based Success Messages
 
     'ok'          => 'Ok',
     'success'     => 'Success',
@@ -49,7 +49,7 @@ return [
     'assigned'    => 'Assigned',
     'unassigned'  => 'Unassigned',
 
-    // Errors — HTTP
+    // HTTP Error Messages
 
     'http_error'            => 'HTTP Error',
 
@@ -65,5 +65,7 @@ return [
     'unprocessable_content' => 'Validation error',  // 422
     'locked'                => 'Resource locked',  // 423
     'internal_server_error' => 'Internal Server Error',  // 500
+
+    // Error Messages by Modules (check documentation)
 
 ];
