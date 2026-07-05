@@ -192,6 +192,7 @@ class InstallCommand extends Command
             "API_FORCE_JSON_RESPONSE=false\n" .
             "API_IS_MODULE_AVAILABLE=false\n" .
             "API_TRANSLATION_LOOKUP=strict\n" .
+            "API_SHOW_EXECUTION_TIME=false\n" .
             "\n" .
             "API_LOG_THROWABLE=true\n" .
             "API_LOG_RENDERED=true\n" .

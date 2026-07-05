@@ -52,4 +52,13 @@ return [
         // 'posts_drafts' => 'posts',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Execution Time
+    |--------------------------------------------------------------------------
+    | If true, adds execution_time (ms) to the meta object of successful responses.
+    | Useful for diagnosing slow requests without external tools. Disable in production.
+    */
+    'show_execution_time' => env('API_SHOW_EXECUTION_TIME', false),
+
 ];

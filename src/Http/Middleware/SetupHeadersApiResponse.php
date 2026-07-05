@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src83\LaravelApiResponse\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -38,6 +39,18 @@ class SetupHeadersApiResponse
 
         if (config('api.force_json_response')) {
             $response->headers->set('Content-Type', 'application/json');
+        }
+
+        if ($response instanceof JsonResponse && config('api.show_execution_time')) {
+            $data = $response->getData(true);
+            if (($data['success'] ?? false) === true) {
+                $startTime = defined('LARAVEL_START') ? LARAVEL_START : microtime(true);
+                $data['meta'] = array_merge(
+                    is_array($data['meta']) ? $data['meta'] : [],
+                    ['execution_time' => (int) round((microtime(true) - $startTime) * 1000)],
+                );
+                $response->setData($data);
+            }
         }
 
         return $response;
