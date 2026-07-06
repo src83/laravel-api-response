@@ -10,7 +10,7 @@ final class BusinessLogger
 {
     public static function warning(string $event, array $context = []): void
     {
-        if (!config('api_logging.log_business_warnings')) {
+        if (!config('api_response_logging.log_business_warnings')) {
             return;
         }
 

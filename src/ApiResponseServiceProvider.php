@@ -14,8 +14,8 @@ class ApiResponseServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/api.php', 'api');
-        $this->mergeConfigFrom(__DIR__ . '/../config/api_logging.php', 'api_logging');
+        $this->mergeConfigFrom(__DIR__ . '/../config/api_response.php', 'api_response');
+        $this->mergeConfigFrom(__DIR__ . '/../config/api_response_logging.php', 'api_response_logging');
 
         $this->app->bind(TranslationLoggerInterface::class, ApiLogger::class);
     }
@@ -26,8 +26,8 @@ class ApiResponseServiceProvider extends ServiceProvider
             $this->commands([InstallCommand::class]);
 
             $this->publishes([
-                __DIR__ . '/../config/api.php'         => config_path('api.php'),
-                __DIR__ . '/../config/api_logging.php' => config_path('api_logging.php'),
+                __DIR__ . '/../config/api_response.php'         => config_path('api_response.php'),
+                __DIR__ . '/../config/api_response_logging.php' => config_path('api_response_logging.php'),
             ], 'api-response-config');
 
             $this->publishes([

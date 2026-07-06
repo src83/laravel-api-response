@@ -32,16 +32,16 @@ class SetupHeadersApiResponse
             return $response;
         }
 
-        if (config('api.direct_accept_header')) {
+        if (config('api_response.direct_accept_header')) {
             $accept = $request->header('Accept');
             $response->headers->set('Content-Type', $accept);
         }
 
-        if (config('api.force_json_response')) {
+        if (config('api_response.force_json_response')) {
             $response->headers->set('Content-Type', 'application/json');
         }
 
-        if ($response instanceof JsonResponse && config('api.show_execution_time')) {
+        if ($response instanceof JsonResponse && config('api_response.show_execution_time')) {
             $data = $response->getData(true);
             if (($data['success'] ?? false) === true) {
                 $startTime = defined('LARAVEL_START') ? LARAVEL_START : microtime(true);

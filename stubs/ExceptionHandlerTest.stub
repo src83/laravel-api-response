@@ -14,7 +14,7 @@ class ExceptionHandlerTest extends TestCase
     {
         parent::setUp();
         // Ensures module system is active regardless of .env value
-        config(['api.is_module_available' => true]);
+        config(['api_response.is_module_available' => true]);
     }
 
     // 400: BadRequest

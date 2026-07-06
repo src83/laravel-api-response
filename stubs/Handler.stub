@@ -126,7 +126,7 @@ class Handler extends ExceptionHandler
     protected function handleApiException(Request $request, Throwable $e): ApiErrorDTO
     {
         $isDebug  = config('app.debug') === true;
-        $isModule = config('api.is_module_available') === true;
+        $isModule = config('api_response.is_module_available') === true;
 
         $module   = $isModule ? $request->apiModule() : null;
 

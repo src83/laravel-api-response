@@ -30,7 +30,7 @@ final class ModuleResolver
     // Проверяет включена ли модульная система API
     private static function isModuleEnabled(): bool
     {
-        return config('api.is_module_available') === true;
+        return config('api_response.is_module_available') === true;
     }
 
     // Извлекает модуль по умолчанию из текущего запроса (см. 'apiModule' в ApiServiceProvider)
@@ -46,7 +46,7 @@ final class ModuleResolver
             return null;
         }
 
-        $aliases = config('api.module_aliases', []);
+        $aliases = config('api_response.module_aliases', []);
 
         return $aliases[$module] ?? $module;
     }

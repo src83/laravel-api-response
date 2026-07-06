@@ -61,12 +61,12 @@ final class ApiLogger implements TranslationLoggerInterface
 
     private function isThrowableEnabled(): bool
     {
-        return config('api_logging.log_throwable') === true;
+        return config('api_response_logging.log_throwable') === true;
     }
 
     private function isRenderedEnabled(): bool
     {
-        return config('api_logging.log_rendered') === true;
+        return config('api_response_logging.log_rendered') === true;
     }
 
     // ==========================================================================
@@ -122,7 +122,7 @@ final class ApiLogger implements TranslationLoggerInterface
 
     public function translationMissing(array $context): void
     {
-        if (!config('api_logging.log_missing_translations')) {
+        if (!config('api_response_logging.log_missing_translations')) {
             return;
         }
 

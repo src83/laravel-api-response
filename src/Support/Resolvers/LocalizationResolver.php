@@ -23,7 +23,7 @@ final readonly class LocalizationResolver
     public function getLocalizedMessage(?string $module, string $baseKey): string
     {
         $locale = app()->getLocale();
-        $strategy = config('api.translation_lookup', 'strict');
+        $strategy = config('api_response.translation_lookup', 'strict');
 
         // 1. Пробуем найти перевод по составному ключу
         if (!empty($module)) {

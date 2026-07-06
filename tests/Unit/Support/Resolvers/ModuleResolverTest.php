@@ -28,7 +28,7 @@ final class ModuleResolverTest extends TestCase
     #[Test]
     public function it_returns_prefix_even_if_modules_are_disabled(): void
     {
-        config(['api.is_module_available' => false]);
+        config(['api_response.is_module_available' => false]);
 
         $result = ModuleResolver::resolve('users');
 
@@ -38,7 +38,7 @@ final class ModuleResolverTest extends TestCase
     #[Test]
     public function it_returns_prefix_even_if_modules_are_enabled(): void
     {
-        config(['api.is_module_available' => true]);
+        config(['api_response.is_module_available' => true]);
 
         $this->mockRequestModule('admin');
 
@@ -50,7 +50,7 @@ final class ModuleResolverTest extends TestCase
     #[Test]
     public function it_returns_null_when_modules_are_disabled_and_prefix_is_null(): void
     {
-        config(['api.is_module_available' => false]);
+        config(['api_response.is_module_available' => false]);
 
         $this->mockRequestModule('admin');
 
@@ -62,7 +62,7 @@ final class ModuleResolverTest extends TestCase
     #[Test]
     public function it_returns_request_module_when_modules_are_enabled_and_prefix_is_null(): void
     {
-        config(['api.is_module_available' => true]);
+        config(['api_response.is_module_available' => true]);
 
         $this->mockRequestModule('admin');
 
@@ -74,7 +74,7 @@ final class ModuleResolverTest extends TestCase
     #[Test]
     public function it_returns_null_when_modules_are_enabled_but_request_has_no_module(): void
     {
-        config(['api.is_module_available' => true]);
+        config(['api_response.is_module_available' => true]);
 
         $this->mockRequestModule(null);
 

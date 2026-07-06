@@ -15,7 +15,7 @@ final class MessageResolverTest extends TestCase
     #[Test]
     public function it_resolves_module_for_simple_key_to_null_when_modules_not_allowed(): void
     {
-        config(['api.is_module_available' => false]);
+        config(['api_response.is_module_available' => false]);
 
         // given
         $messageKey = MessageKeyEnum::CREATED;
@@ -33,7 +33,7 @@ final class MessageResolverTest extends TestCase
     #[Test]
     public function it_resolves_module_for_composite_key_from_prefix_when_modules_not_allowed(): void
     {
-        config(['api.is_module_available' => false]);
+        config(['api_response.is_module_available' => false]);
 
         // given
         $messageKey = 'users.created';
@@ -51,7 +51,7 @@ final class MessageResolverTest extends TestCase
     #[Test]
     public function it_resolves_module_for_simple_key_from_request_when_modules_allowed(): void
     {
-        config(['api.is_module_available' => true]);
+        config(['api_response.is_module_available' => true]);
 
         // given
         $messageKey = MessageKeyEnum::CREATED;
@@ -73,7 +73,7 @@ final class MessageResolverTest extends TestCase
     #[Test]
     public function it_resolves_module_for_composite_key_from_prefix_when_modules_allowed(): void
     {
-        config(['api.is_module_available' => true]);
+        config(['api_response.is_module_available' => true]);
 
         // given
         $messageKey = 'users.created';
@@ -123,7 +123,7 @@ final class MessageResolverTest extends TestCase
     #[Test]
     public function it_removes_default_module_when_message_key_starts_with_dot(): void
     {
-        config(['api.is_module_available' => true]);
+        config(['api_response.is_module_available' => true]);
 
         // given
         $messageKey = '.created';
