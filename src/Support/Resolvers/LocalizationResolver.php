@@ -27,7 +27,7 @@ final readonly class LocalizationResolver
 
         // 1. Пробуем найти перевод по составному ключу
         if (!empty($module)) {
-            $moduleKey = "api_results.$module.$baseKey";
+            $moduleKey = "api_response.$module.$baseKey";
 
             if ($strategy === 'strict' && Lang::has($moduleKey, $locale, false)) {
                 return Lang::get($moduleKey, [], $locale);
@@ -51,7 +51,7 @@ final readonly class LocalizationResolver
         }
 
         // 2. Пробуем найти перевод только по базовому ключу
-        $baseKeyFull = "api_results.$baseKey";
+        $baseKeyFull = "api_response.$baseKey";
 
         if ($strategy === 'strict' && Lang::has($baseKeyFull, $locale, false)) {
             return Lang::get($baseKeyFull, [], $locale);

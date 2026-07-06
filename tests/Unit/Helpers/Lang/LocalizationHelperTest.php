@@ -29,8 +29,8 @@ final class LocalizationHelperTest extends TestCase
     public function T1_module_and_baseKey_found_translation_by_both_no_log(): void
     {
         Lang::addLines([
-            'api_results.test.unprocessable_content' => 'Validation error [module: test]',
-            'api_results.unprocessable_content'      => 'Validation error',
+            'api_response.test.unprocessable_content' => 'Validation error [module: test]',
+            'api_response.unprocessable_content'      => 'Validation error',
         ], 'en');
 
         $module  = 'test';
@@ -52,7 +52,7 @@ final class LocalizationHelperTest extends TestCase
     public function T2_module_and_baseKey_found_translation_just_by_baseKey_log_1_time(): void
     {
         Lang::addLines([
-            'api_results.unprocessable_content' => 'Validation error',
+            'api_response.unprocessable_content' => 'Validation error',
         ], 'en');
 
         $module  = 'test';
@@ -75,8 +75,8 @@ final class LocalizationHelperTest extends TestCase
     public function T3_module_and_baseKey_not_found_translation_log_2_times(): void
     {
         Lang::addLines([
-            'api_results.test.unprocessable_content' => 'Validation error [module: test]',
-            'api_results.unprocessable_content'      => 'Validation error',
+            'api_response.test.unprocessable_content' => 'Validation error [module: test]',
+            'api_response.unprocessable_content'      => 'Validation error',
         ], 'en');
 
         $module  = 'test';
@@ -99,7 +99,7 @@ final class LocalizationHelperTest extends TestCase
     public function T4_baseKey_found_translation_by_baseKey_no_log(): void
     {
         Lang::addLines([
-            'api_results.unprocessable_content' => 'Validation error',
+            'api_response.unprocessable_content' => 'Validation error',
         ], 'en');
 
         $module  = null;
@@ -121,7 +121,7 @@ final class LocalizationHelperTest extends TestCase
     public function T5_baseKey_not_found_translation_log_1_time(): void
     {
         Lang::addLines([
-            'api_results.unprocessable_content' => 'Validation error',
+            'api_response.unprocessable_content' => 'Validation error',
         ], 'en');
 
         $module  = null;

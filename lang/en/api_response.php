@@ -2,7 +2,7 @@
 
 /**
  * Dictionary of operation results
- * API returns a result message from api_results dictionary
+ * API returns a result message from api_response dictionary
  */
 
 // EN
