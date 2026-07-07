@@ -17,6 +17,10 @@ class ApiResponseServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/api_response.php', 'api_response');
         $this->mergeConfigFrom(__DIR__ . '/../config/api_response_logging.php', 'api_response_logging');
 
+        foreach (config('api_response_logging.channels', []) as $name => $channel) {
+            config(["logging.channels.$name" => $channel]);
+        }
+
         $this->app->bind(TranslationLoggerInterface::class, ApiLogger::class);
     }
 

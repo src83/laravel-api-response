@@ -19,7 +19,6 @@ class InstallCommand extends Command
 
         $this->publishAssets();
         $this->patchKernel();
-        $this->patchLogging();
         $this->patchPhpunit();
         $this->patchEnvFile(base_path('.env'));
         $this->patchEnvFile(base_path('.env.example'));
@@ -89,58 +88,6 @@ class InstallCommand extends Command
 
         file_put_contents($path, $content);
         $this->components->twoColumnDetail('app/Http/Kernel.php', '<fg=green;options=bold>DONE</>');
-    }
-
-    protected function patchLogging(): void
-    {
-        $path = config_path('logging.php');
-
-        if (!file_exists($path)) {
-            $this->components->twoColumnDetail('config/logging.php', '<fg=yellow;options=bold>SKIP</> (file not found)');
-            return;
-        }
-
-        $content = file_get_contents($path);
-
-        if (str_contains($content, 'api_throwable')) {
-            $this->components->twoColumnDetail('config/logging.php', '<fg=yellow;options=bold>SKIP</> (already patched)');
-            return;
-        }
-
-        $channels =
-            "\n" .
-            "        // Raw exception data (suitable for: Sentry / dev analysis)\n" .
-            "        'api_throwable' => [\n" .
-            "            'driver' => 'single',\n" .
-            "            'path' => storage_path('logs/api_throwable.log'),\n" .
-            "            'level' => env('LOG_LEVEL', 'error'),\n" .
-            "        ],\n" .
-            "\n" .
-            "        // Rendered API error responses (suitable for: Elastic / ClickHouse)\n" .
-            "        'api_rendered' => [\n" .
-            "            'driver' => 'single',\n" .
-            "            'path' => storage_path('logs/api_rendered.log'),\n" .
-            "            'level' => env('LOG_LEVEL', 'error'),\n" .
-            "        ],\n" .
-            "\n" .
-            "        // Missing translation keys\n" .
-            "        'api_missing_translations' => [\n" .
-            "            'driver' => 'single',\n" .
-            "            'path' => storage_path('logs/api_missing_translations.log'),\n" .
-            "            'level' => 'warning',\n" .
-            "        ],\n" .
-            "\n" .
-            "        // Business anomalies and violated business expectations\n" .
-            "        'api_business' => [\n" .
-            "            'driver' => 'single',\n" .
-            "            'path' => storage_path('logs/api_business.log'),\n" .
-            "            'level' => 'warning',\n" .
-            "        ],\n";
-
-        $content = str_replace("'channels' => [", "'channels' => [" . $channels, $content);
-
-        file_put_contents($path, $content);
-        $this->components->twoColumnDetail('config/logging.php', '<fg=green;options=bold>DONE</>');
     }
 
     protected function patchPhpunit(): void

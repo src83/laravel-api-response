@@ -44,7 +44,7 @@ return [
     |--------------------------------------------------------------------------
     | Log Business Warnings
     |--------------------------------------------------------------------------
-    | When true, business-level warnings are logged via the 'api_business' channel
+    | When true, business-level warnings are logged via the 'api_business_warnings' channel
     | using BusinessLogger::warning().
     */
     'log_business_warnings' => env('API_LOG_BUSINESS_WARNINGS', true),
@@ -111,6 +111,46 @@ return [
         'rendered' => [
             'allowed_codes' => [400, 500],
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Log Channels
+    |--------------------------------------------------------------------------
+    | These channels are automatically registered into logging.channels by
+    | ApiResponseServiceProvider. Override by publishing this config and
+    | modifying the array, or by defining the same channel name in config/logging.php.
+    */
+    'channels' => [
+
+        // Технический факт ошибки (сырьё для: Sentry / dev-анализа)
+        'api_throwable' => [
+            'driver' => 'single',
+            'path'   => storage_path('logs/api_throwable.log'),
+            'level'  => env('LOG_LEVEL', 'error'),
+        ],
+
+        // API-ответ, бизнес-ошибки (сырьё для: Elastic / ClickHouse)
+        'api_rendered' => [
+            'driver' => 'single',
+            'path'   => storage_path('logs/api_rendered.log'),
+            'level'  => env('LOG_LEVEL', 'error'),
+        ],
+
+        // Логирование пропущенных словарных ключей (если перевод не найден)
+        'api_missing_translations' => [
+            'driver' => 'single',
+            'path'   => storage_path('logs/api_missing_translations.log'),
+            'level'  => 'warning',
+        ],
+
+        // Логирование бизнес-аномалий или нарушений бизнес-ожиданий
+        'api_business_warnings' => [
+            'driver' => 'single',
+            'path'   => storage_path('logs/api_business_warnings.log'),
+            'level'  => 'warning',
+        ],
+
     ],
 
 ];

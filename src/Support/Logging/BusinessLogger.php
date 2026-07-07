@@ -14,7 +14,7 @@ final class BusinessLogger
             return;
         }
 
-        Log::channel('api_business')
+        Log::channel('api_business_warnings')
             ->warning($event, $context + [
                 'env' => app()->environment(),
             ]);
