@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Src83\LaravelApiResponse\Support\Logging\DTO\ApiRenderedErrorDTO;
 use Throwable;
 
-final class ApiLogger implements TranslationLoggerInterface
+final class ApiLogger implements ApiLoggerInterface
 {
     private array $request;
 
@@ -74,7 +74,7 @@ final class ApiLogger implements TranslationLoggerInterface
     private function shouldLogThrowable(Throwable $e): bool
     {
         $currentEnv  = app()->environment();
-        $skippedTypes = config("api_logging.$currentEnv.throwable.skipped_types", []);
+        $skippedTypes = config("api_response_logging.$currentEnv.throwable.skipped_types", []);
 
         foreach ($skippedTypes as $type) {
             if ($e instanceof $type) {
@@ -88,7 +88,7 @@ final class ApiLogger implements TranslationLoggerInterface
     private function shouldLogRendered(ApiRenderedErrorDTO $responseData): bool
     {
         $currentEnv   = app()->environment();
-        $allowedCodes = config("api_logging.$currentEnv.rendered.allowed_codes", []);
+        $allowedCodes = config("api_response_logging.$currentEnv.rendered.allowed_codes", []);
 
         return in_array($responseData->httpCode, $allowedCodes, true);
     }

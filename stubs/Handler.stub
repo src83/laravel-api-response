@@ -20,7 +20,7 @@ use Src83\LaravelApiResponse\Exceptions\ItemNotFoundException;
 use Src83\LaravelApiResponse\Helpers\Data\StringHelper;
 use Src83\LaravelApiResponse\Http\Responses\ApiErrorResponse;
 use Src83\LaravelApiResponse\Support\DTO\ApiErrorDTO;
-use Src83\LaravelApiResponse\Support\Logging\ApiLogger;
+use Src83\LaravelApiResponse\Support\Logging\ApiLoggerInterface;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
@@ -96,7 +96,7 @@ class Handler extends ExceptionHandler
     public function report(Throwable $e): void
     {
         if (request()?->isApi()) {
-            app(ApiLogger::class)->captureThrowableError($e);
+            app(ApiLoggerInterface::class)->captureThrowableError($e);
         }
 
         parent::report($e);

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
 use Src83\LaravelApiResponse\Console\Commands\InstallCommand;
 use Src83\LaravelApiResponse\Support\Logging\ApiLogger;
-use Src83\LaravelApiResponse\Support\Logging\TranslationLoggerInterface;
+use Src83\LaravelApiResponse\Support\Logging\ApiLoggerInterface;
 
 class ApiResponseServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,7 @@ class ApiResponseServiceProvider extends ServiceProvider
             config(["logging.channels.$name" => $channel]);
         }
 
-        $this->app->bind(TranslationLoggerInterface::class, ApiLogger::class);
+        $this->app->bind(ApiLoggerInterface::class, ApiLogger::class);
     }
 
     public function boot(): void

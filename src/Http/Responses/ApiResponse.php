@@ -7,7 +7,7 @@ namespace Src83\LaravelApiResponse\Http\Responses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use InvalidArgumentException;
-use Src83\LaravelApiResponse\Support\Logging\ApiLogger;
+use Src83\LaravelApiResponse\Support\Logging\ApiLoggerInterface;
 use Src83\LaravelApiResponse\Support\Logging\DTO\ApiRenderedErrorDTO;
 use Src83\LaravelApiResponse\Support\Pagination\ApiPaginator;
 
@@ -128,7 +128,7 @@ class ApiResponse extends JsonResponse
             sysMessage: $sysMessage,
             details:    $details,
         );
-        app(ApiLogger::class)->captureRenderedError($responseData);
+        app(ApiLoggerInterface::class)->captureRenderedError($responseData);
 
         return new self($response, $httpCode);
     }

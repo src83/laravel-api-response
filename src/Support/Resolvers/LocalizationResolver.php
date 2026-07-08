@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Src83\LaravelApiResponse\Support\Resolvers;
 
 use Illuminate\Support\Facades\Lang;
-use Src83\LaravelApiResponse\Support\Logging\TranslationLoggerInterface;
+use Src83\LaravelApiResponse\Support\Logging\ApiLoggerInterface;
 
 /**
  * @internal
@@ -17,7 +17,7 @@ use Src83\LaravelApiResponse\Support\Logging\TranslationLoggerInterface;
 final readonly class LocalizationResolver
 {
     public function __construct(
-        private TranslationLoggerInterface $apiLogger,
+        private ApiLoggerInterface $apiLogger,
     ) {}
 
     public function getLocalizedMessage(?string $module, string $baseKey): string
