@@ -31,11 +31,39 @@ class InstallCommand extends Command
 
     protected function publishAssets(): void
     {
-        $this->callSilently('vendor:publish', ['--tag' => 'api-response-config']);
-        $this->callSilently('vendor:publish', ['--tag' => 'api-response-lang']);
-        $this->callSilently('vendor:publish', ['--tag' => 'api-response-stubs']);
+        $this->publishGroup('api-response-config', [
+            'config/api_response.php'         => config_path('api_response.php'),
+            'config/api_response_logging.php' => config_path('api_response_logging.php'),
+        ]);
 
-        $this->components->twoColumnDetail('Publishing config, lang, stubs', '<fg=green;options=bold>DONE</>');
+        $this->publishGroup('api-response-lang', [
+            'lang/en/api_response.php' => lang_path('en/api_response.php'),
+            'lang/ru/api_response.php' => lang_path('ru/api_response.php'),
+        ]);
+
+        $this->publishGroup('api-response-stubs', [
+            'app/Exceptions/Handler.php'                 => app_path('Exceptions/Handler.php'),
+            'app/Http/Middleware/Authenticate.php'       => app_path('Http/Middleware/Authenticate.php'),
+            'tests/Feature/Api/ExceptionHandlerTest.php' => base_path('tests/Feature/Api/ExceptionHandlerTest.php'),
+        ]);
+    }
+
+    protected function publishGroup(string $tag, array $files): void
+    {
+        $existedBefore = [];
+        foreach ($files as $path) {
+            $existedBefore[$path] = file_exists($path);
+        }
+
+        $this->callSilently('vendor:publish', ['--tag' => $tag]);
+
+        foreach ($files as $label => $path) {
+            if ($existedBefore[$path]) {
+                $this->components->twoColumnDetail($label, '<fg=yellow;options=bold>SKIP</> (already exists)');
+            } else {
+                $this->components->twoColumnDetail($label, '<fg=green;options=bold>DONE</>');
+            }
+        }
     }
 
     protected function patchKernel(): void
