@@ -8,7 +8,8 @@ use Illuminate\Console\Command;
 
 class InstallCommand extends Command
 {
-    protected $signature = 'api-response:install';
+    protected $signature = 'api-response:install 
+        {--force : Overwrite Handler.php and Authenticate.php even if they already exist}';
 
     protected $description = 'Install the Laravel API Response package';
 
@@ -41,11 +42,63 @@ class InstallCommand extends Command
             'lang/ru/api_response.php' => lang_path('ru/api_response.php'),
         ]);
 
-        $this->publishGroup('api-response-stubs', [
-            'app/Exceptions/Handler.php'                 => app_path('Exceptions/Handler.php'),
-            'app/Http/Middleware/Authenticate.php'       => app_path('Http/Middleware/Authenticate.php'),
-            'tests/Feature/Api/ExceptionHandlerTest.php' => base_path('tests/Feature/Api/ExceptionHandlerTest.php'),
-        ]);
+        $this->publishStubs();
+    }
+
+    protected function publishStubs(): void
+    {
+        $isFresh   = (bool) $this->option('force');
+        $stubsPath = __DIR__ . '/../../../stubs';
+
+        $testDest = base_path('tests/Feature/Api/ExceptionHandlerTest.php');
+        if (!file_exists($testDest)) {
+            $testDir = dirname($testDest);
+            if (!is_dir($testDir) && !mkdir($testDir, 0755, true) && !is_dir($testDir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" could not be created', $testDir));
+            }
+            copy("$stubsPath/ExceptionHandlerTest.stub", $testDest);
+            $this->components->twoColumnDetail('tests/Feature/Api/ExceptionHandlerTest.php', '<fg=green;options=bold>DONE</>');
+        } else {
+            $this->components->twoColumnDetail('tests/Feature/Api/ExceptionHandlerTest.php', '<fg=yellow;options=bold>SKIP</> (already exists)');
+        }
+
+        $this->publishStubFile(
+            source:  "$stubsPath/Handler.stub",
+            dest:    app_path('Exceptions/Handler.php'),
+            label:   'app/Exceptions/Handler.php',
+            marker:  'ApiLoggerInterface',
+            isFresh: $isFresh,
+        );
+
+        $this->publishStubFile(
+            source:  "$stubsPath/Authenticate.stub",
+            dest:    app_path('Http/Middleware/Authenticate.php'),
+            label:   'app/Http/Middleware/Authenticate.php',
+            marker:  'isApi()',
+            isFresh: $isFresh,
+        );
+    }
+
+    protected function publishStubFile(string $source, string $dest, string $label, string $marker, bool $isFresh): void
+    {
+        if ($isFresh) {
+            copy($source, $dest);
+            $this->components->twoColumnDetail($label, '<fg=green;options=bold>DONE</>');
+            return;
+        }
+
+        if (!file_exists($dest)) {
+            copy($source, $dest);
+            $this->components->twoColumnDetail($label, '<fg=green;options=bold>DONE</>');
+            return;
+        }
+
+        if (str_contains(file_get_contents($dest), $marker)) {
+            $this->components->twoColumnDetail($label, '<fg=yellow;options=bold>SKIP</> (already configured)');
+            return;
+        }
+
+        $this->components->twoColumnDetail($label, '<fg=red;options=bold>ACTION REQUIRED</> — merge manually from stubs/' . basename($source));
     }
 
     protected function publishGroup(string $tag, array $files): void
