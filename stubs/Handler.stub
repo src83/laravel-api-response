@@ -110,6 +110,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e): Response|JsonResponse|HttpResponse
     {
+        // Optional: redirect web users to login when CSRF token expires.
+        // After install: Uncomment and Replace 'login' with your named login route.
+        // It may be 'showLoginForm'. Example: ->route('showLoginForm')
+        // 419: CSRF — Page Expired
+        /*
+        if ($e instanceof TokenMismatchException) {
+            if (!$request->isApi()) {
+                return redirect()
+                    ->route('login')
+                    ->with('session_expired', true)
+                    ->withInput($request->except('_token'));
+            }
+            // API: 419 handled below in handleApiException()
+        }
+        */
+
         // API only: handle all exceptions in a unified JSON format
         if ($request->isApi()) {
             $errorData = $this->handleApiException($request, $e);
