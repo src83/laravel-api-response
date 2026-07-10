@@ -19,9 +19,10 @@
         "illuminate/validation": "^9.0|^10.0|^11.0"
     },
     "require-dev": {
+        "larastan/larastan": "^2.0",
+        "laravel/pint": "^1.0",
         "orchestra/testbench": "^7.0|^8.0|^9.0",
-        "phpunit/phpunit": "^10.0|^11.0",
-        "laravel/pint": "^1.0"
+        "phpunit/phpunit": "^10.0|^11.0"
     },
     "autoload": {
         "psr-4": {
@@ -42,6 +43,11 @@
                 "Src83\\LaravelApiResponse\\ApiResponseServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "lint": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse -c phpstan.neon --no-progress --no-interaction"
     },
     "config": {
         "sort-packages": true,
