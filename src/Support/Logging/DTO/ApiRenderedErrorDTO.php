@@ -15,6 +15,7 @@ final readonly class ApiRenderedErrorDTO
         public mixed $details = null,
     ) {}
 
+    /** @return array<string, mixed> */
     public function toArray(): array
     {
         return [

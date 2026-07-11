@@ -10,10 +10,10 @@ use Src83\LaravelApiResponse\Support\Resolvers\MessageResolver;
 final class ApiErrorResponse extends ApiResponse
 {
     /**
-     * @use ApiErrorResponse::make(404, MessageKeyEnum::NOT_FOUND)
-     * @use ApiErrorResponse::make(401, MessageKeyEnum::UNAUTHORIZED)
-     * @use ApiErrorResponse::make(401, MessageKeyEnum::UNAUTHORIZED, sysMessage: 'Bad credentials')
-     * @use ApiErrorResponse::make(422, MessageKeyEnum::UNPROCESSABLE_CONTENT, details: ['fields' => $errors])
+     * @example ApiErrorResponse::make(404, MessageKeyEnum::NOT_FOUND)
+     * @example ApiErrorResponse::make(401, MessageKeyEnum::UNAUTHORIZED)
+     * @example ApiErrorResponse::make(401, MessageKeyEnum::UNAUTHORIZED, sysMessage: 'Bad credentials')
+     * @example ApiErrorResponse::make(422, MessageKeyEnum::UNPROCESSABLE_CONTENT, details: ['fields' => $errors])
      */
     public static function make(
         int $httpCode,

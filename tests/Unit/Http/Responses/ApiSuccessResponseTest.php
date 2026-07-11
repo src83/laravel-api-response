@@ -19,7 +19,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertSame([
             'success'   => true,
@@ -38,7 +38,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertSame([
             'success'   => true,
@@ -60,7 +60,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(201, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertSame([
             'success'   => true,
@@ -83,7 +83,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(201, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertTrue($json['success']);
         $this->assertSame(201, $json['http_code']);
@@ -108,7 +108,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(201, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertSame([
             'success'   => true,
@@ -135,7 +135,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(201, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertSame([
             'success'   => true,
@@ -159,7 +159,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertTrue($json['success']);
         $this->assertSame(200, $json['http_code']);
@@ -182,7 +182,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertSame([
             'success'   => true,
@@ -206,7 +206,7 @@ final class ApiSuccessResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertSame([
             'success'   => true,

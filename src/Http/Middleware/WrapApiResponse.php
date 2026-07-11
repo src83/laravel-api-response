@@ -35,11 +35,10 @@ class WrapApiResponse
             return $response;
         }
 
+        /** @var \Illuminate\Http\Response $response */
         $content = $response->getOriginalContent();
         $data = $content;
-        $status = method_exists($response, 'getStatusCode')
-            ? $response->getStatusCode()
-            : Response::HTTP_OK;
+        $status = $response->getStatusCode();
 
         // Оборачиваем ответ в стандартную унифицированную структуру
         if ($status >= 200 && $status < 300) {

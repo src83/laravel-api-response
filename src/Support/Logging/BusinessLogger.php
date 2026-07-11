@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 final class BusinessLogger
 {
+    /** @param array<string, mixed> $context */
     public static function warning(string $event, array $context = []): void
     {
         if (!config('api_response_logging.log_business_warnings')) {

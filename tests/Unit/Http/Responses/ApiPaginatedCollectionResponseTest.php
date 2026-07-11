@@ -33,7 +33,7 @@ final class ApiPaginatedCollectionResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         // ------------------
 
@@ -75,7 +75,7 @@ final class ApiPaginatedCollectionResponseTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         // ------------------
 

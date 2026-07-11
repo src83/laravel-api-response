@@ -13,5 +13,6 @@ interface ApiLoggerInterface
 
     public function captureRenderedError(ApiRenderedErrorDTO $responseData): void;
 
+    /** @param array<string, mixed> $context */
     public function translationMissing(array $context): void;
 }

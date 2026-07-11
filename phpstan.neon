@@ -7,3 +7,10 @@ parameters:
   paths:
     - src/
     - tests/
+  ignoreErrors:
+    # Request macros registered at runtime — not visible to PHPStan
+    - '#^Call to an undefined method Illuminate\\Http\\Request::(isApi|apiModule)\(\)\.$#'
+    # Mockery fluent expectations — PHPStan doesn't know the full chain
+    - '#^Call to an undefined method Mockery\\ExpectationInterface\|Mockery\\ExpectsHigherOrderMessage::(never|once|twice|with|times)\(\)\.$#'
+    # app()->instance() returns Application|null in PHPStan but is always non-null in Testbench
+    - '#^Cannot call method instance\(\) on Illuminate\\Foundation\\Application\|null\.$#'

@@ -10,8 +10,10 @@ use Throwable;
 
 final class ApiLogger implements ApiLoggerInterface
 {
+    /** @var array<string, mixed> */
     private array $request;
 
+    /** @var array<string, bool> */
     private static array $loggedTranslationMisses = [];
 
     public function __construct()
@@ -23,9 +25,9 @@ final class ApiLogger implements ApiLoggerInterface
         }
 
         $this->request = [
-            'method' => request()?->method(),
-            'url'    => request()?->fullUrl(),
-            'params' => request()?->except(['password', 'token']),
+            'method' => request()->method(),
+            'url'    => request()->fullUrl(),
+            'params' => request()->except(['password', 'token']),
         ];
     }
 
@@ -74,7 +76,7 @@ final class ApiLogger implements ApiLoggerInterface
     private function shouldLogThrowable(Throwable $e): bool
     {
         $currentEnv = app()->environment();
-        $skippedTypes = config("api_response_logging.$currentEnv.throwable.skipped_types", []);
+        $skippedTypes = (array) config("api_response_logging.$currentEnv.throwable.skipped_types", []);
 
         foreach ($skippedTypes as $type) {
             if ($e instanceof $type) {
@@ -88,7 +90,7 @@ final class ApiLogger implements ApiLoggerInterface
     private function shouldLogRendered(ApiRenderedErrorDTO $responseData): bool
     {
         $currentEnv = app()->environment();
-        $allowedCodes = config("api_response_logging.$currentEnv.rendered.allowed_codes", []);
+        $allowedCodes = (array) config("api_response_logging.$currentEnv.rendered.allowed_codes", []);
 
         return in_array($responseData->httpCode, $allowedCodes, true);
     }
@@ -120,6 +122,7 @@ final class ApiLogger implements ApiLoggerInterface
 
     // ==========================================================================
 
+    /** @param array<string, mixed> $context */
     public function translationMissing(array $context): void
     {
         if (!config('api_response_logging.log_missing_translations')) {

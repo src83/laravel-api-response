@@ -37,7 +37,7 @@ final class ModuleResolver
     // Извлекает модуль по умолчанию из текущего запроса (см. 'apiModule' в ApiServiceProvider)
     private static function getDefaultModule(): ?string
     {
-        return request()?->apiModule();
+        return request()->apiModule();
     }
 
     // Поиск алиаса модуля
@@ -47,7 +47,8 @@ final class ModuleResolver
             return null;
         }
 
-        $aliases = config('api_response.module_aliases', []);
+        /** @var array<string, string> $aliases */
+        $aliases = (array) config('api_response.module_aliases', []);
 
         return $aliases[$module] ?? $module;
     }

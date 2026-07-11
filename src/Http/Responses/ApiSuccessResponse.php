@@ -12,12 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 final class ApiSuccessResponse extends ApiResponse
 {
     /**
-     * @use ApiSuccessResponse::make()
-     * @use ApiSuccessResponse::make($data)
-     * @use ApiSuccessResponse::make($data, null, Response::HTTP_CREATED)
-     * @use ApiSuccessResponse::make($data, null, Response::HTTP_CREATED, MessageKeyEnum::CREATED)
-     * @use ApiSuccessResponse::make($data, null, Response::HTTP_CREATED, MessageKeyEnum::CREATED, 'Created')
-     * @use ApiSuccessResponse::make($data, null, Response::HTTP_OK, null, 'Done')
+     * @example ApiSuccessResponse::make()
+     * @example ApiSuccessResponse::make($data)
+     * @example ApiSuccessResponse::make($data, null, Response::HTTP_CREATED)
+     * @example ApiSuccessResponse::make($data, null, Response::HTTP_CREATED, MessageKeyEnum::CREATED)
+     * @example ApiSuccessResponse::make($data, null, Response::HTTP_CREATED, MessageKeyEnum::CREATED, 'Created')
+     * @example ApiSuccessResponse::make($data, null, Response::HTTP_OK, null, 'Done')
      */
     public static function make(
         mixed $data = null,

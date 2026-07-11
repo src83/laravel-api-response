@@ -17,7 +17,7 @@ class ApiResponseServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/api_response.php', 'api_response');
         $this->mergeConfigFrom(__DIR__.'/../config/api_response_logging.php', 'api_response_logging');
 
-        foreach (config('api_response_logging.channels', []) as $name => $channel) {
+        foreach ((array) config('api_response_logging.channels', []) as $name => $channel) {
             config(["logging.channels.$name" => $channel]);
         }
 
@@ -75,8 +75,8 @@ class ApiResponseServiceProvider extends ServiceProvider
             }
 
             $module = $this->path();
-            $module = preg_replace(['/^(\/)?api(\/)?/', '/\d/'], '', $module);
-            $module = preg_replace('/[\/_-]+/', '_', $module);
+            $module = preg_replace(['/^(\/)?api(\/)?/', '/\d/'], '', $module) ?? '';
+            $module = preg_replace('/[\/_-]+/', '_', $module) ?? '';
             $module = trim($module, '_');
 
             return $module ?: null;

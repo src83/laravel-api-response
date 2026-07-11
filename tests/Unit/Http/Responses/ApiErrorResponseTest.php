@@ -19,7 +19,7 @@ final class ApiErrorResponseTest extends TestCase
 
         $this->assertSame(404, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertSame([
             'success'   => false,
@@ -37,7 +37,7 @@ final class ApiErrorResponseTest extends TestCase
 
         $this->assertSame(401, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertFalse($json['success']);
         $this->assertSame(401, $json['http_code']);
@@ -62,7 +62,7 @@ final class ApiErrorResponseTest extends TestCase
 
         $this->assertSame(401, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertFalse($json['success']);
         $this->assertSame(401, $json['http_code']);
@@ -88,7 +88,7 @@ final class ApiErrorResponseTest extends TestCase
 
         $this->assertSame(409, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertFalse($json['success']);
         $this->assertSame(409, $json['http_code']);
@@ -113,7 +113,7 @@ final class ApiErrorResponseTest extends TestCase
 
         $this->assertSame(500, $response->getStatusCode());
 
-        $json = $response->getData(true);
+        $json = (array) $response->getData(true);
 
         $this->assertFalse($json['success']);
         $this->assertSame(500, $json['http_code']);

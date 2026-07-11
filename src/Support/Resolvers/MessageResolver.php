@@ -26,11 +26,11 @@ final class MessageResolver
 
         // 5. Автогенерация GUI-сообщения
         if ($guiMessage === null) {
-            $guiMessage = LocalizationHelper::getLocalizedMessage($module, $baseKey);
+            $guiMessage = LocalizationHelper::getLocalizedMessage($module, $baseKey ?? '');
         }
 
         return new ResolvedMessage(
-            messageKey: $resolvedKey,
+            messageKey: $resolvedKey ?? '',
             guiMessage: $guiMessage,
             module: $module,
             baseKey: $baseKey,

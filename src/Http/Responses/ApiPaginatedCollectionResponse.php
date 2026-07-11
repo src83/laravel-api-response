@@ -10,6 +10,7 @@ use Src83\LaravelApiResponse\Support\Pagination\ApiPaginator;
 
 final class ApiPaginatedCollectionResponse
 {
+    /** @param LengthAwarePaginator<mixed> $paginator */
     public static function fromPaginator(
         LengthAwarePaginator $paginator,
         int $httpCode = 200,

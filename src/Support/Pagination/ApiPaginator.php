@@ -17,6 +17,11 @@ final readonly class ApiPaginator
         public bool $hasNextPage,
     ) {}
 
+    /**
+     * @template T
+     *
+     * @param LengthAwarePaginator<T> $p
+     */
     public static function from(LengthAwarePaginator $p): self
     {
         return new self(
@@ -29,6 +34,7 @@ final readonly class ApiPaginator
         );
     }
 
+    /** @return array<string, mixed> */
     public function toArray(): array
     {
         return [

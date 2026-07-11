@@ -8,6 +8,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 final class ArrayPaginator
 {
+    /**
+     * @param iterable<array-key, mixed> $items
+     * @return LengthAwarePaginator<mixed>
+     */
     public static function paginate(iterable $items, int $perPage, int $page): LengthAwarePaginator
     {
         $collection = collect($items);

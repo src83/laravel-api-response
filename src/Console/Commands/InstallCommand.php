@@ -95,7 +95,7 @@ class InstallCommand extends Command
             return;
         }
 
-        if (str_contains(file_get_contents($dest), $marker)) {
+        if (str_contains((string) file_get_contents($dest), $marker)) {
             $this->components->twoColumnDetail($label, '<fg=yellow;options=bold>SKIP</> (already configured)');
 
             return;
@@ -104,6 +104,7 @@ class InstallCommand extends Command
         $this->components->twoColumnDetail($label, '<fg=red;options=bold>ACTION REQUIRED</> — merge manually from stubs/'.basename($source));
     }
 
+    /** @param array<string, string> $files */
     protected function publishGroup(string $tag, array $files): void
     {
         $existedBefore = [];
@@ -132,7 +133,7 @@ class InstallCommand extends Command
             return;
         }
 
-        $content = file_get_contents($path);
+        $content = (string) file_get_contents($path);
 
         if (str_contains($content, 'SetupHeadersApiRequest')) {
             $this->components->twoColumnDetail('app/Http/Kernel.php', '<fg=yellow;options=bold>SKIP</> (already patched)');
@@ -163,7 +164,9 @@ class InstallCommand extends Command
 
         // Append response middleware after SubstituteBindings in the api group
         $apiGroupPos = strpos($content, "'api' => [");
-        $substitutePos = strpos($content, 'SubstituteBindings::class,', $apiGroupPos);
+        $substitutePos = $apiGroupPos !== false
+            ? strpos($content, 'SubstituteBindings::class,', $apiGroupPos)
+            : false;
         if ($substitutePos !== false) {
             $lineEnd = strpos($content, "\n", $substitutePos) + 1;
             $content = substr($content, 0, $lineEnd)
@@ -186,7 +189,7 @@ class InstallCommand extends Command
             return;
         }
 
-        $content = file_get_contents($path);
+        $content = (string) file_get_contents($path);
 
         if (str_contains($content, 'API_IS_MODULE_AVAILABLE')) {
             $this->components->twoColumnDetail('phpunit.xml', '<fg=yellow;options=bold>SKIP</> (already patched)');
@@ -215,7 +218,7 @@ class InstallCommand extends Command
             return;
         }
 
-        $content = file_get_contents($path);
+        $content = (string) file_get_contents($path);
 
         if (str_contains($content, 'API_IS_MODULE_AVAILABLE')) {
             $this->components->twoColumnDetail($filename, '<fg=yellow;options=bold>SKIP</> (already patched)');

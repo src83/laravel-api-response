@@ -38,7 +38,7 @@ class SetupHeadersApiResponse
         }
 
         if ($response instanceof JsonResponse && config('api_response.show_execution_time')) {
-            $data = $response->getData(true);
+            $data = (array) $response->getData(true);
             if (($data['success'] ?? false) === true) {
                 $startTime = defined('LARAVEL_START') ? LARAVEL_START : microtime(true);
                 $data['meta'] = array_merge(
