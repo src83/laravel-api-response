@@ -45,8 +45,9 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "lint": "vendor/bin/pint",
+        "test": "vendor/bin/phpunit -c tests/phpunit.xml",
+        "lint": "vendor/bin/pint --test",
+        "lint-fix": "vendor/bin/pint",
         "analyse": "vendor/bin/phpstan analyse -c phpstan.neon --no-progress --no-interaction"
     },
     "config": {
