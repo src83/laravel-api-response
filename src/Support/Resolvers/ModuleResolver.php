@@ -21,6 +21,7 @@ final class ModuleResolver
         if (self::isModuleEnabled()) {
             $module = self::getDefaultModule();
             $module = self::normalize($module);
+
             return $module;
         }
 

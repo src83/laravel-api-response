@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Src83\LaravelApiResponse\Tests\Feature;
 
 use Illuminate\Http\Request;
-use Src83\LaravelApiResponse\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Src83\LaravelApiResponse\Tests\TestCase;
 
 /**
  * Проверяется корректность определения модуля: "ресурс" || "ресурс_действие"

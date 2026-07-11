@@ -7,12 +7,12 @@ namespace Src83\LaravelApiResponse\Support\Logging\DTO;
 final readonly class ApiRenderedErrorDTO
 {
     public function __construct(
-        public int     $httpCode,
-        public string  $httpText,
+        public int $httpCode,
+        public string $httpText,
         public ?string $messageKey = null,
         public ?string $guiMessage = null,
         public ?string $sysMessage = null,
-        public mixed   $details = null,
+        public mixed $details = null,
     ) {}
 
     public function toArray(): array

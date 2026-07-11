@@ -10,13 +10,13 @@ return [
 
     // Action-Based Success Messages
 
-    'ok'          => 'Ok',
-    'success'     => 'Успешно',
+    'ok'      => 'Ok',
+    'success' => 'Успешно',
 
     // CRUD BASE
-    'created'     => 'Запись успешно создана',
-    'updated'     => 'Запись успешно обновлена',
-    'deleted'     => 'Запись успешно удалена',
+    'created' => 'Запись успешно создана',
+    'updated' => 'Запись успешно обновлена',
+    'deleted' => 'Запись успешно удалена',
 
     // VISIBILITY / STATUS
     'published'   => 'Запись опубликована',
@@ -35,23 +35,23 @@ return [
     'rejected'    => 'Запрос отклонён',
 
     // TRANSFER / IO
-    'uploaded'    => 'Файл успешно загружен',
-    'downloaded'  => 'Файл успешно скачан',
-    'imported'    => 'Данные импортированы',
-    'exported'    => 'Данные экспортированы',
+    'uploaded'   => 'Файл успешно загружен',
+    'downloaded' => 'Файл успешно скачан',
+    'imported'   => 'Данные импортированы',
+    'exported'   => 'Данные экспортированы',
 
     // OTHER COMMON ACTIONS
-    'sent'        => 'Отправлено',
-    'received'    => 'Получено',
-    'synced'      => 'Синхронизировано',
-    'attached'    => 'Связано',
-    'detached'    => 'Связь удалена',
-    'assigned'    => 'Назначено',
-    'unassigned'  => 'Снято назначение',
+    'sent'       => 'Отправлено',
+    'received'   => 'Получено',
+    'synced'     => 'Синхронизировано',
+    'attached'   => 'Связано',
+    'detached'   => 'Связь удалена',
+    'assigned'   => 'Назначено',
+    'unassigned' => 'Снято назначение',
 
     // HTTP Error Messages
 
-    'http_error'            => 'HTTP Error',
+    'http_error' => 'HTTP Error',
 
     'bad_request'           => 'Некорректный запрос',  // 400
     'unauthorized'          => 'Неаутентифицирован',  // 401

@@ -14,8 +14,8 @@ class ApiResponseServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/api_response.php', 'api_response');
-        $this->mergeConfigFrom(__DIR__ . '/../config/api_response_logging.php', 'api_response_logging');
+        $this->mergeConfigFrom(__DIR__.'/../config/api_response.php', 'api_response');
+        $this->mergeConfigFrom(__DIR__.'/../config/api_response_logging.php', 'api_response_logging');
 
         foreach (config('api_response_logging.channels', []) as $name => $channel) {
             config(["logging.channels.$name" => $channel]);
@@ -38,19 +38,19 @@ class ApiResponseServiceProvider extends ServiceProvider
         $this->commands([InstallCommand::class]);
 
         $this->publishes([
-            __DIR__ . '/../config/api_response.php'         => config_path('api_response.php'),
-            __DIR__ . '/../config/api_response_logging.php' => config_path('api_response_logging.php'),
+            __DIR__.'/../config/api_response.php'         => config_path('api_response.php'),
+            __DIR__.'/../config/api_response_logging.php' => config_path('api_response_logging.php'),
         ], 'api-response-config');
 
         $this->publishes([
-            __DIR__ . '/../lang/en' => lang_path('en'),
-            __DIR__ . '/../lang/ru' => lang_path('ru'),
+            __DIR__.'/../lang/en' => lang_path('en'),
+            __DIR__.'/../lang/ru' => lang_path('ru'),
         ], 'api-response-lang');
 
         $this->publishes([
-            __DIR__ . '/../stubs/Handler.stub'              => app_path('Exceptions/Handler.php'),
-            __DIR__ . '/../stubs/Authenticate.stub'         => app_path('Http/Middleware/Authenticate.php'),
-            __DIR__ . '/../stubs/ExceptionHandlerTest.stub' => base_path('tests/Feature/Api/ExceptionHandlerTest.php'),
+            __DIR__.'/../stubs/Handler.stub'              => app_path('Exceptions/Handler.php'),
+            __DIR__.'/../stubs/Authenticate.stub'         => app_path('Http/Middleware/Authenticate.php'),
+            __DIR__.'/../stubs/ExceptionHandlerTest.stub' => base_path('tests/Feature/Api/ExceptionHandlerTest.php'),
         ], 'api-response-stubs');
     }
 

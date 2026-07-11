@@ -10,13 +10,13 @@ return [
 
     // Action-Based Success Messages
 
-    'ok'          => 'Ok',
-    'success'     => 'Success',
+    'ok'      => 'Ok',
+    'success' => 'Success',
 
     // CRUD BASE
-    'created'     => 'Record has been successfully created',
-    'updated'     => 'Record has been successfully updated',
-    'deleted'     => 'Record has been successfully deleted',
+    'created' => 'Record has been successfully created',
+    'updated' => 'Record has been successfully updated',
+    'deleted' => 'Record has been successfully deleted',
 
     // VISIBILITY / STATUS
     'published'   => 'Record has been published',
@@ -35,23 +35,23 @@ return [
     'rejected'    => 'The request has been rejected',
 
     // TRANSFER / IO
-    'uploaded'    => 'File has been uploaded',
-    'downloaded'  => 'File has been downloaded',
-    'imported'    => 'Data has been imported',
-    'exported'    => 'Data has been exported',
+    'uploaded'   => 'File has been uploaded',
+    'downloaded' => 'File has been downloaded',
+    'imported'   => 'Data has been imported',
+    'exported'   => 'Data has been exported',
 
     // OTHER COMMON ACTIONS
-    'sent'        => 'Sent',
-    'received'    => 'Received',
-    'synced'      => 'Synchronized',
-    'attached'    => 'Attached',
-    'detached'    => 'Detached',
-    'assigned'    => 'Assigned',
-    'unassigned'  => 'Unassigned',
+    'sent'       => 'Sent',
+    'received'   => 'Received',
+    'synced'     => 'Synchronized',
+    'attached'   => 'Attached',
+    'detached'   => 'Detached',
+    'assigned'   => 'Assigned',
+    'unassigned' => 'Unassigned',
 
     // HTTP Error Messages
 
-    'http_error'            => 'HTTP Error',
+    'http_error' => 'HTTP Error',
 
     'bad_request'           => 'Bad Request',  // 400
     'unauthorized'          => 'Unauthenticated',  // 401

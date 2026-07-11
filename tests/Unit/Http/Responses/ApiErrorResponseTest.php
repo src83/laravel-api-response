@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Src83\LaravelApiResponse\Tests\Unit\Http\Responses;
 
+use PHPUnit\Framework\Attributes\Test;
 use Src83\LaravelApiResponse\Enums\MessageKeyEnum;
 use Src83\LaravelApiResponse\Http\Responses\ApiErrorResponse;
 use Src83\LaravelApiResponse\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
-use PHPUnit\Framework\Attributes\Test;
 
 final class ApiErrorResponseTest extends TestCase
 {
@@ -22,11 +22,11 @@ final class ApiErrorResponseTest extends TestCase
         $json = $response->getData(true);
 
         $this->assertSame([
-            'success' => false,
+            'success'   => false,
             'http_code' => 404,
             'http_text' => 'Not Found',
-            'message' => null,
-            'details' => null,
+            'message'   => null,
+            'details'   => null,
         ], $json);
     }
 

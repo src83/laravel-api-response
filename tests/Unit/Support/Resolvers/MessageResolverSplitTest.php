@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Src83\LaravelApiResponse\Tests\Unit\Support\Resolvers;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Src83\LaravelApiResponse\Support\Resolvers\MessageResolver;
-use PHPUnit\Framework\Attributes\Test;
 
 final class MessageResolverSplitTest extends TestCase
 {

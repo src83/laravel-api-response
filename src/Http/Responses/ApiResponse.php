@@ -38,7 +38,6 @@ class ApiResponse extends JsonResponse
      * @param int $httpCode HTTP-код (по умолчанию 200)
      * @param string|null $messageKey Словарный ключ для поиска перевода в указанной локали
      * @param string|null $guiMessage Локализованное сообщение для вывода в GUI
-     * @return self
      */
     public static function success(
         mixed $data = null,
@@ -93,7 +92,6 @@ class ApiResponse extends JsonResponse
      * @param string|null $guiMessage Локализованное сообщение для вывода в GUI
      * @param string|null $sysMessage Кастомное сообщение из аргумента исключения (если не указано - возвращает null)
      * @param mixed|null $details Дополнительные данные (например, ошибки валидации)
-     * @return self
      */
     public static function error(
         int $httpCode,
@@ -121,12 +119,12 @@ class ApiResponse extends JsonResponse
         }
 
         $responseData = new ApiRenderedErrorDTO(
-            httpCode:   $httpCode,
-            httpText:   $httpText,
+            httpCode: $httpCode,
+            httpText: $httpText,
             messageKey: $messageKey,
             guiMessage: $guiMessage,
             sysMessage: $sysMessage,
-            details:    $details,
+            details: $details,
         );
         app(ApiLoggerInterface::class)->captureRenderedError($responseData);
 
@@ -135,7 +133,7 @@ class ApiResponse extends JsonResponse
 
     private static function validateHttpCode(int $httpCode, string $method): string
     {
-        $method = substr($method, strrpos($method, '\\') + 1) . '()';
+        $method = substr($method, strrpos($method, '\\') + 1).'()';
 
         // Framework-specific codes not present in Symfony's list
         $extended = [419 => 'Page Expired'];

@@ -6,9 +6,9 @@ namespace Src83\LaravelApiResponse\Tests\Unit\Support\Resolvers;
 
 use Illuminate\Http\Request;
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use Src83\LaravelApiResponse\Support\Resolvers\ModuleResolver;
 use Src83\LaravelApiResponse\Tests\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 final class ModuleResolverTest extends TestCase
 {

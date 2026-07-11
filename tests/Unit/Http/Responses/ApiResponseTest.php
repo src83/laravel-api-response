@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Src83\LaravelApiResponse\Tests\Unit\Http\Responses;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Test;
 use Src83\LaravelApiResponse\Http\Responses\ApiResponse;
 use Src83\LaravelApiResponse\Tests\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 final class ApiResponseTest extends TestCase
 {
@@ -55,8 +55,8 @@ final class ApiResponseTest extends TestCase
     public function it_returns_success_response_includes_message_container_with_data(): void
     {
         $response = ApiResponse::success(
-            data:       ['id' => 2],
-            httpCode:   201,
+            data: ['id' => 2],
+            httpCode: 201,
             messageKey: 'auth.created',
             guiMessage: 'User created',
         );
@@ -71,8 +71,8 @@ final class ApiResponseTest extends TestCase
                 'key' => 'auth.created',
                 'gui' => 'User created',
             ],
-            'meta'      => null,
-            'data'      => ['id' => 2],
+            'meta' => null,
+            'data' => ['id' => 2],
         ], $json);
     }
 
@@ -98,11 +98,11 @@ final class ApiResponseTest extends TestCase
     public function it_includes_message_and_details_when_provided(): void
     {
         $response = ApiResponse::error(
-            httpCode:   422,
+            httpCode: 422,
             messageKey: 'validation.failed',
             guiMessage: 'Validation error',
             sysMessage: 'Invalid payload',
-            details:    ['email' => ['Required']],
+            details: ['email' => ['Required']],
         );
 
         $json = $response->getData(true);
@@ -116,7 +116,7 @@ final class ApiResponseTest extends TestCase
                 'gui' => 'Validation error',
                 'sys' => 'Invalid payload',
             ],
-            'details'   => ['email' => ['Required']],
+            'details' => ['email' => ['Required']],
         ], $json);
     }
 

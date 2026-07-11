@@ -18,6 +18,7 @@ final class ApiLogger implements ApiLoggerInterface
     {
         if (app()->runningInConsole()) {
             $this->request = [];
+
             return;
         }
 
@@ -56,7 +57,6 @@ final class ApiLogger implements ApiLoggerInterface
         $this->storeRenderedEvent($responseData);
     }
 
-
     // ==========================================================================
 
     private function isThrowableEnabled(): bool
@@ -73,7 +73,7 @@ final class ApiLogger implements ApiLoggerInterface
 
     private function shouldLogThrowable(Throwable $e): bool
     {
-        $currentEnv  = app()->environment();
+        $currentEnv = app()->environment();
         $skippedTypes = config("api_response_logging.$currentEnv.throwable.skipped_types", []);
 
         foreach ($skippedTypes as $type) {
@@ -87,7 +87,7 @@ final class ApiLogger implements ApiLoggerInterface
 
     private function shouldLogRendered(ApiRenderedErrorDTO $responseData): bool
     {
-        $currentEnv   = app()->environment();
+        $currentEnv = app()->environment();
         $allowedCodes = config("api_response_logging.$currentEnv.rendered.allowed_codes", []);
 
         return in_array($responseData->httpCode, $allowedCodes, true);

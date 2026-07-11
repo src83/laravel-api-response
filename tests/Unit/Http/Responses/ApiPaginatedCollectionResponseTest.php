@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Src83\LaravelApiResponse\Tests\Unit\Http\Responses;
 
+use PHPUnit\Framework\Attributes\Test;
 use Src83\LaravelApiResponse\Http\Responses\ApiPaginatedCollectionResponse;
 use Src83\LaravelApiResponse\Support\Pagination\ArrayPaginator;
 use Src83\LaravelApiResponse\Tests\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 final class ApiPaginatedCollectionResponseTest extends TestCase
 {
@@ -20,7 +20,7 @@ final class ApiPaginatedCollectionResponseTest extends TestCase
             ['id' => 3, 'name' => 'Test Model 03'],
         ];
 
-        $page    = 1;
+        $page = 1;
         $perPage = 2;
 
         // ------------------
@@ -62,7 +62,7 @@ final class ApiPaginatedCollectionResponseTest extends TestCase
     {
         $items = [];
 
-        $page    = 1;
+        $page = 1;
         $perPage = 2;
 
         // ------------------

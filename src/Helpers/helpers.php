@@ -13,9 +13,6 @@ if (!function_exists('app_terminate')) {
      * the error. In any other case the standard Laravel Validator must be
      * used instead.
      *
-     * @param string $code
-     * @param string $message
-     * @return never
      * @throws DomainLayerException
      */
     function app_terminate(string $code, string $message): never
@@ -31,7 +28,7 @@ if (!function_exists('debug_log')) {
     function debug_log(mixed $data, ?string $context = null): void
     {
         if (config('app.debug')) {
-            Log::debug($context ? strtoupper($context) . '::' : 'DEBUG: ', (array) $data);
+            Log::debug($context ? strtoupper($context).'::' : 'DEBUG: ', (array) $data);
         }
     }
 }

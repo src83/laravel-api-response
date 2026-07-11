@@ -23,17 +23,17 @@ final class ApiErrorResponse extends ApiResponse
         mixed $details = null,
     ): ApiResponse {
         if ($messageKey !== null) {
-            $resolved   = MessageResolver::resolve($messageKey, $guiMessage);
+            $resolved = MessageResolver::resolve($messageKey, $guiMessage);
             $messageKey = $resolved->messageKey;
             $guiMessage = $resolved->guiMessage;
         }
 
         return parent::error(
-            httpCode:   $httpCode,
+            httpCode: $httpCode,
             messageKey: $messageKey,
             guiMessage: $guiMessage,
             sysMessage: $sysMessage,
-            details:    $details,
+            details: $details,
         );
     }
 }

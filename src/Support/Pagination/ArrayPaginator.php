@@ -13,9 +13,9 @@ final class ArrayPaginator
         $collection = collect($items);
 
         return new LengthAwarePaginator(
-            items:       $collection->forPage($page, $perPage)->values(),
-            total:       $collection->count(),
-            perPage:     $perPage,
+            items: $collection->forPage($page, $perPage)->values(),
+            total: $collection->count(),
+            perPage: $perPage,
             currentPage: $page,
         );
     }

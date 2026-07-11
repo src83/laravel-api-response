@@ -22,7 +22,7 @@ final class MessageResolver
         $module = $ignoreDefaultModule ? null : ModuleResolver::resolve($prefix);
 
         // 4. Формируем итоговый ключ
-        $resolvedKey = $module ? $module . '.' . $baseKey : $baseKey;
+        $resolvedKey = $module ? $module.'.'.$baseKey : $baseKey;
 
         // 5. Автогенерация GUI-сообщения
         if ($guiMessage === null) {
@@ -32,15 +32,14 @@ final class MessageResolver
         return new ResolvedMessage(
             messageKey: $resolvedKey,
             guiMessage: $guiMessage,
-            module:     $module,
-            baseKey:    $baseKey,
+            module: $module,
+            baseKey: $baseKey,
         );
     }
 
     /**
      * Разбивает messageKey на [prefix, baseKey, ignoreDefaultModule].
      *
-     * @param string|null $messageKey
      * @return array{0: ?string, 1: ?string, 2: bool}
      */
     public static function split(?string $messageKey): array

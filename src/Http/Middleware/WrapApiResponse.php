@@ -15,10 +15,6 @@ class WrapApiResponse
 {
     /**
      * Приведим все API-ответы к единому JSON-формату при финальной проверке структуры API-ответа.
-     *
-     * @param Request $request
-     * @param Closure $next
-     * @return Response
      */
     public function handle(Request $request, Closure $next): Response
     {

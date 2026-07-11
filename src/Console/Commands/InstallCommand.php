@@ -47,8 +47,8 @@ class InstallCommand extends Command
 
     protected function publishStubs(): void
     {
-        $isFresh   = (bool) $this->option('force');
-        $stubsPath = __DIR__ . '/../../../stubs';
+        $isFresh = (bool) $this->option('force');
+        $stubsPath = __DIR__.'/../../../stubs';
 
         $testDest = base_path('tests/Feature/Api/ExceptionHandlerTest.php');
         if (!file_exists($testDest)) {
@@ -63,18 +63,18 @@ class InstallCommand extends Command
         }
 
         $this->publishStubFile(
-            source:  "$stubsPath/Handler.stub",
-            dest:    app_path('Exceptions/Handler.php'),
-            label:   'app/Exceptions/Handler.php',
-            marker:  'ApiLoggerInterface',
+            source: "$stubsPath/Handler.stub",
+            dest: app_path('Exceptions/Handler.php'),
+            label: 'app/Exceptions/Handler.php',
+            marker: 'ApiLoggerInterface',
             isFresh: $isFresh,
         );
 
         $this->publishStubFile(
-            source:  "$stubsPath/Authenticate.stub",
-            dest:    app_path('Http/Middleware/Authenticate.php'),
-            label:   'app/Http/Middleware/Authenticate.php',
-            marker:  'isApi()',
+            source: "$stubsPath/Authenticate.stub",
+            dest: app_path('Http/Middleware/Authenticate.php'),
+            label: 'app/Http/Middleware/Authenticate.php',
+            marker: 'isApi()',
             isFresh: $isFresh,
         );
     }
@@ -84,21 +84,24 @@ class InstallCommand extends Command
         if ($isFresh) {
             copy($source, $dest);
             $this->components->twoColumnDetail($label, '<fg=green;options=bold>DONE</>');
+
             return;
         }
 
         if (!file_exists($dest)) {
             copy($source, $dest);
             $this->components->twoColumnDetail($label, '<fg=green;options=bold>DONE</>');
+
             return;
         }
 
         if (str_contains(file_get_contents($dest), $marker)) {
             $this->components->twoColumnDetail($label, '<fg=yellow;options=bold>SKIP</> (already configured)');
+
             return;
         }
 
-        $this->components->twoColumnDetail($label, '<fg=red;options=bold>ACTION REQUIRED</> — merge manually from stubs/' . basename($source));
+        $this->components->twoColumnDetail($label, '<fg=red;options=bold>ACTION REQUIRED</> — merge manually from stubs/'.basename($source));
     }
 
     protected function publishGroup(string $tag, array $files): void
@@ -125,6 +128,7 @@ class InstallCommand extends Command
 
         if (!file_exists($path)) {
             $this->components->twoColumnDetail('app/Http/Kernel.php', '<fg=yellow;options=bold>SKIP</> (file not found)');
+
             return;
         }
 
@@ -132,16 +136,17 @@ class InstallCommand extends Command
 
         if (str_contains($content, 'SetupHeadersApiRequest')) {
             $this->components->twoColumnDetail('app/Http/Kernel.php', '<fg=yellow;options=bold>SKIP</> (already patched)');
+
             return;
         }
 
         // Add use imports after HttpKernel import
         $content = str_replace(
             "use Illuminate\Foundation\Http\Kernel as HttpKernel;",
-            "use Illuminate\Foundation\Http\Kernel as HttpKernel;\n" .
-            "use Src83\LaravelApiResponse\Http\Middleware\ApiContextMiddleware;\n" .
-            "use Src83\LaravelApiResponse\Http\Middleware\SetupHeadersApiRequest;\n" .
-            "use Src83\LaravelApiResponse\Http\Middleware\SetupHeadersApiResponse;\n" .
+            "use Illuminate\Foundation\Http\Kernel as HttpKernel;\n".
+            "use Src83\LaravelApiResponse\Http\Middleware\ApiContextMiddleware;\n".
+            "use Src83\LaravelApiResponse\Http\Middleware\SetupHeadersApiRequest;\n".
+            "use Src83\LaravelApiResponse\Http\Middleware\SetupHeadersApiResponse;\n".
             "use Src83\LaravelApiResponse\Http\Middleware\WrapApiResponse;",
             $content
         );
@@ -151,9 +156,9 @@ class InstallCommand extends Command
         if ($apiGroupPos !== false) {
             $lineEnd = strpos($content, "\n", $apiGroupPos) + 1;
             $content = substr($content, 0, $lineEnd)
-                . "            SetupHeadersApiRequest::class,\n"
-                . "            ApiContextMiddleware::class,\n"
-                . substr($content, $lineEnd);
+                ."            SetupHeadersApiRequest::class,\n"
+                ."            ApiContextMiddleware::class,\n"
+                .substr($content, $lineEnd);
         }
 
         // Append response middleware after SubstituteBindings in the api group
@@ -162,9 +167,9 @@ class InstallCommand extends Command
         if ($substitutePos !== false) {
             $lineEnd = strpos($content, "\n", $substitutePos) + 1;
             $content = substr($content, 0, $lineEnd)
-                . "            WrapApiResponse::class,\n"
-                . "            SetupHeadersApiResponse::class,\n"
-                . substr($content, $lineEnd);
+                ."            WrapApiResponse::class,\n"
+                ."            SetupHeadersApiResponse::class,\n"
+                .substr($content, $lineEnd);
         }
 
         file_put_contents($path, $content);
@@ -177,6 +182,7 @@ class InstallCommand extends Command
 
         if (!file_exists($path)) {
             $this->components->twoColumnDetail('phpunit.xml', '<fg=yellow;options=bold>SKIP</> (file not found)');
+
             return;
         }
 
@@ -184,15 +190,16 @@ class InstallCommand extends Command
 
         if (str_contains($content, 'API_IS_MODULE_AVAILABLE')) {
             $this->components->twoColumnDetail('phpunit.xml', '<fg=yellow;options=bold>SKIP</> (already patched)');
+
             return;
         }
 
         $envVars =
-            "        <env name=\"API_IS_MODULE_AVAILABLE\" value=\"true\"/>\n" .
-            "        <env name=\"API_LOG_THROWABLE\" value=\"false\"/>\n" .
+            "        <env name=\"API_IS_MODULE_AVAILABLE\" value=\"true\"/>\n".
+            "        <env name=\"API_LOG_THROWABLE\" value=\"false\"/>\n".
             "        <env name=\"API_LOG_RENDERED\" value=\"false\"/>\n";
 
-        $content = str_replace('    </php>', $envVars . '    </php>', $content);
+        $content = str_replace('    </php>', $envVars.'    </php>', $content);
 
         file_put_contents($path, $content);
         $this->components->twoColumnDetail('phpunit.xml', '<fg=green;options=bold>DONE</>');
@@ -204,6 +211,7 @@ class InstallCommand extends Command
 
         if (!file_exists($path)) {
             $this->components->twoColumnDetail($filename, '<fg=yellow;options=bold>SKIP</> (file not found)');
+
             return;
         }
 
@@ -211,24 +219,25 @@ class InstallCommand extends Command
 
         if (str_contains($content, 'API_IS_MODULE_AVAILABLE')) {
             $this->components->twoColumnDetail($filename, '<fg=yellow;options=bold>SKIP</> (already patched)');
+
             return;
         }
 
         $block =
-            "\n# Laravel-Api-Response\n" .
-            "API_DIRECT_ACCEPT_HEADER=false\n" .
-            "API_FORCE_JSON_RESPONSE=false\n" .
-            "API_IS_MODULE_AVAILABLE=false\n" .
-            "API_TRANSLATION_LOOKUP=strict\n" .
-            "API_SHOW_EXECUTION_TIME=false\n" .
-            "\n" .
-            "API_LOG_THROWABLE=true\n" .
-            "API_LOG_RENDERED=true\n" .
-            "API_LOG_MISSING_TRANSLATIONS=true\n" .
-            "API_LOG_BUSINESS_WARNINGS=true\n" .
+            "\n# Laravel-Api-Response\n".
+            "API_DIRECT_ACCEPT_HEADER=false\n".
+            "API_FORCE_JSON_RESPONSE=false\n".
+            "API_IS_MODULE_AVAILABLE=false\n".
+            "API_TRANSLATION_LOOKUP=strict\n".
+            "API_SHOW_EXECUTION_TIME=false\n".
+            "\n".
+            "API_LOG_THROWABLE=true\n".
+            "API_LOG_RENDERED=true\n".
+            "API_LOG_MISSING_TRANSLATIONS=true\n".
+            "API_LOG_BUSINESS_WARNINGS=true\n".
             "# /Laravel-Api-Response\n";
 
-        file_put_contents($path, $content . $block);
+        file_put_contents($path, $content.$block);
         $this->components->twoColumnDetail($filename, '<fg=green;options=bold>DONE</>');
     }
 }

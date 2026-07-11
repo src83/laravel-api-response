@@ -9,10 +9,10 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 final readonly class ApiPaginator
 {
     public function __construct(
-        public int  $currentPage,
-        public int  $perPage,
-        public int  $totalItems,
-        public int  $lastPage,
+        public int $currentPage,
+        public int $perPage,
+        public int $totalItems,
+        public int $lastPage,
         public ?int $lastItem,
         public bool $hasNextPage,
     ) {}
@@ -21,10 +21,10 @@ final readonly class ApiPaginator
     {
         return new self(
             currentPage: $p->currentPage(),
-            perPage:     $p->perPage(),
-            totalItems:  $p->total(),
-            lastPage:    $p->lastPage(),
-            lastItem:    $p->lastItem(),
+            perPage: $p->perPage(),
+            totalItems: $p->total(),
+            lastPage: $p->lastPage(),
+            lastItem: $p->lastItem(),
             hasNextPage: $p->hasMorePages(),
         );
     }

@@ -17,9 +17,9 @@ final class ApiPaginatedCollectionResponse
         ?string $guiMessage = null,
     ): ApiResponse {
         return ApiSuccessResponse::make(
-            data:       $paginator->items(),
-            paginator:  ApiPaginator::from($paginator),
-            httpCode:   $httpCode,
+            data: $paginator->items(),
+            paginator: ApiPaginator::from($paginator),
+            httpCode: $httpCode,
             messageKey: $messageKey,
             guiMessage: $guiMessage,
         );

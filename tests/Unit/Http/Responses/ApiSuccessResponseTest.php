@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Src83\LaravelApiResponse\Tests\Unit\Http\Responses;
 
+use PHPUnit\Framework\Attributes\Test;
 use Src83\LaravelApiResponse\Enums\MessageKeyEnum;
 use Src83\LaravelApiResponse\Http\Responses\ApiSuccessResponse;
 use Src83\LaravelApiResponse\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
-use PHPUnit\Framework\Attributes\Test;
 
 final class ApiSuccessResponseTest extends TestCase
 {
@@ -22,12 +22,12 @@ final class ApiSuccessResponseTest extends TestCase
         $json = $response->getData(true);
 
         $this->assertSame([
-            'success' => true,
+            'success'   => true,
             'http_code' => 200,
             'http_text' => 'OK',
-            'message' => null,
-            'meta' => null,
-            'data' => null,
+            'message'   => null,
+            'meta'      => null,
+            'data'      => null,
         ], $json);
     }
 
@@ -41,12 +41,12 @@ final class ApiSuccessResponseTest extends TestCase
         $json = $response->getData(true);
 
         $this->assertSame([
-            'success' => true,
+            'success'   => true,
             'http_code' => 200,
             'http_text' => 'OK',
-            'message' => null,
-            'meta' => null,
-            'data' => ['id' => 1],
+            'message'   => null,
+            'meta'      => null,
+            'data'      => ['id' => 1],
         ], $json);
     }
 
@@ -63,12 +63,12 @@ final class ApiSuccessResponseTest extends TestCase
         $json = $response->getData(true);
 
         $this->assertSame([
-            'success' => true,
+            'success'   => true,
             'http_code' => 201,
             'http_text' => 'Created',
-            'message' => null,
-            'meta' => null,
-            'data' => ['id' => 1],
+            'message'   => null,
+            'meta'      => null,
+            'data'      => ['id' => 1],
         ], $json);
     }
 
@@ -111,10 +111,10 @@ final class ApiSuccessResponseTest extends TestCase
         $json = $response->getData(true);
 
         $this->assertSame([
-            'success' => true,
+            'success'   => true,
             'http_code' => 201,
             'http_text' => 'Created',
-            'message' => [
+            'message'   => [
                 'key' => 'created',
                 'gui' => 'Created successfully',
             ],
@@ -138,10 +138,10 @@ final class ApiSuccessResponseTest extends TestCase
         $json = $response->getData(true);
 
         $this->assertSame([
-            'success' => true,
+            'success'   => true,
             'http_code' => 201,
             'http_text' => 'Created',
-            'message' => [
+            'message'   => [
                 'key' => null,
                 'gui' => 'Created successfully',
             ],
@@ -185,10 +185,10 @@ final class ApiSuccessResponseTest extends TestCase
         $json = $response->getData(true);
 
         $this->assertSame([
-            'success' => true,
+            'success'   => true,
             'http_code' => 200,
             'http_text' => 'OK',
-            'message' => [
+            'message'   => [
                 'key' => 'updated',
                 'gui' => 'Model updated successfully',
             ],
@@ -209,10 +209,10 @@ final class ApiSuccessResponseTest extends TestCase
         $json = $response->getData(true);
 
         $this->assertSame([
-            'success' => true,
+            'success'   => true,
             'http_code' => 200,
             'http_text' => 'OK',
-            'message' => [
+            'message'   => [
                 'key' => null,
                 'gui' => 'Model updated successfully',
             ],

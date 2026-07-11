@@ -19,10 +19,6 @@ class SetupHeadersApiResponse
      * При необходимости можем через конфиг установить заголовок ответа Content-Type на тот, который
      * запросили в Accept. Но при такой ручной установке Content-Type по Accept браузер ожидает не JSON,
      * но в данных приходит JSON → Chrome выкидывает белый экран. Это всего лишь опция.
-     *
-     * @param Request $request
-     * @param Closure $next
-     * @return mixed
      */
     public function handle(Request $request, Closure $next): mixed
     {
