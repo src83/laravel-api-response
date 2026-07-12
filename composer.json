@@ -1,9 +1,10 @@
 {
     "name": "src83/laravel-api-response",
-    "description": "Unified JSON API response system for Laravel: structured responses, exception handling, localization, logging, and pagination.",
+    "description": "Structured REST API responses for Laravel with exception handling, localization, logging, and pagination",
+    "keywords": ["laravel", "api", "response", "json", "exception", "handler", "localization", "pagination"],
+    "homepage": "https://github.com/src83/laravel-api-response",
     "type": "library",
     "license": "MIT",
-    "keywords": ["laravel", "api", "response", "json", "exception", "handler", "localization", "pagination"],
     "authors": [
         {
             "name": "Roman Staroseltsev",
@@ -36,6 +37,10 @@
         "psr-4": {
             "Src83\\LaravelApiResponse\\Tests\\": "tests/"
         }
+    },
+    "support": {
+        "source": "https://github.com/src83/laravel-api-response",
+        "issues": "https://github.com/src83/laravel-api-response/issues"
     },
     "extra": {
         "laravel": {
