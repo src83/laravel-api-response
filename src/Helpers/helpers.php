@@ -23,7 +23,7 @@ if (!function_exists('app_terminate')) {
 
 if (!function_exists('debug_log')) {
     /**
-     * Упрощённый логгер для отладки (только если включен debug).
+     * Simplified debug-only logger — it works when APP_DEBUG is true
      */
     function debug_log(mixed $data, ?string $context = null): void
     {

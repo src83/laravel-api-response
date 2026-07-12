@@ -129,7 +129,7 @@ final class ApiLogger implements ApiLoggerInterface
             return;
         }
 
-        // --- защита от дублей ---
+        // Deduplication: prevent the same miss from being logged twice per request
         $fingerprint = implode('|', [
             $context['locale'] ?? '',
             $context['module'] ?? '',
@@ -143,7 +143,7 @@ final class ApiLogger implements ApiLoggerInterface
         }
 
         self::$loggedTranslationMisses[$fingerprint] = true;
-        // --- конец защиты ---
+        // --- end of Deduplication prevention ---
 
         Log::channel('api_missing_translations')
             ->warning('API translation missing', [

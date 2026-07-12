@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Словарь результатов выполнения операций
- * API возвращает сообщение с результатом из словаря api_response
+ * Translation dictionary for API operation results.
+ * The API returns a message resolved from api_response dictionary.
  */
 
 // RU

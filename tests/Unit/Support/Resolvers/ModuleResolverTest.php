@@ -84,10 +84,10 @@ final class ModuleResolverTest extends TestCase
     }
 
     /**
-     * Инжектим макрос в запрос:
-     * - создаём Request с рандомным URI, близким к реальному
-     * - добавляем к нему macro apiModule() с заданным значением
-     * - итоговый запрос кладём в контейнер чтобы он отдавал нужный request
+     * Injects a macro into the request:
+     * - creates a Request with a random URI close to the real one
+     * - adds an apiModule() macro to it with the given value
+     * - registers the request as the container's 'request' instance
      */
     private function mockRequestModule(?string $module): void
     {

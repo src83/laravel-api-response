@@ -12,19 +12,19 @@ final class MessageResolver
 {
     public static function resolve(string|MessageKeyEnum $messageKey, ?string $guiMessage): ResolvedMessage
     {
-        // 1. Приводим ключ к строке
+        // 1. Cast the key to a string
         $messageKey = $messageKey instanceof MessageKeyEnum ? $messageKey->value : $messageKey;
 
-        // 2. Разделяем ключ, если он составной ("module.key")
+        // 2. Split the key if it's composite ("module.key")
         [$prefix, $baseKey, $ignoreDefaultModule] = self::split($messageKey);
 
-        // 3. Получаем модуль: prefix > apiModule() > null
+        // 3. Resolve the module: prefix > apiModule() > null
         $module = $ignoreDefaultModule ? null : ModuleResolver::resolve($prefix);
 
-        // 4. Формируем итоговый ключ
+        // 4. Build the final key
         $resolvedKey = $module ? $module.'.'.$baseKey : $baseKey;
 
-        // 5. Автогенерация GUI-сообщения
+        // 5. Auto-generate the GUI message
         if ($guiMessage === null) {
             $guiMessage = LocalizationHelper::getLocalizedMessage($module, $baseKey ?? '');
         }
@@ -38,7 +38,7 @@ final class MessageResolver
     }
 
     /**
-     * Разбивает messageKey на [prefix, baseKey, ignoreDefaultModule].
+     * Splits messageKey into [prefix, baseKey, ignoreDefaultModule].
      *
      * @return array{0: ?string, 1: ?string, 2: bool}
      */
@@ -52,12 +52,12 @@ final class MessageResolver
             return [null, $messageKey, false];
         }
 
-        // Разделяем строку только по первой точке
+        // Split the string on the first dot only
         [$prefix, $baseKey] = explode('.', $messageKey, 2);
 
         $ignoreDefaultModule = false;
 
-        // Если передан ключ с точкой вида '.created'
+        // Leading dot (e.g. '.created') means: skip auto-module, use base key only
         if ($prefix === '') {
             $prefix = null;
             $ignoreDefaultModule = true;

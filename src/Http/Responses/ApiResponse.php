@@ -12,18 +12,18 @@ use Src83\LaravelApiResponse\Support\Logging\DTO\ApiRenderedErrorDTO;
 use Src83\LaravelApiResponse\Support\Pagination\ApiPaginator;
 
 /**
- * ApiResponse — абстрактная база, содержит логику форматирования, валидации кода, общие поля.
- * Наследники — ApiSuccessResponse и ApiErrorResponse реализуют конкретные фабричные методы.
+ * ApiResponse — an abstract base class containing formatting logic, status code validation, and shared fields.
+ * Subclasses — ApiSuccessResponse and ApiErrorResponse — implement the specific factory methods.
  */
 class ApiResponse extends JsonResponse
 {
     /**
-     * Унифицированный JSON-ответ об успехе.
-     * Пример вызова:
+     * Unified JSON success response.
+     * Example usage:
      *     return ApiResponse::success($user);
-     *     return ApiResponse::success($user, null, 201, 'auth_registration.user_created', 'Пользователь создан');
+     *     return ApiResponse::success($user, null, 201, 'auth_registration.user_created', 'User created');
      *
-     * Пример ответа:
+     * Example response:
      * {
      *    "success": true,
      *    "http_code": 2XX,
@@ -33,11 +33,11 @@ class ApiResponse extends JsonResponse
      *    "data": {...} | null
      * }
      *
-     * @param mixed|null $data Основные данные ответа
-     * @param ApiPaginator|null $paginator Метаданные пагинации
-     * @param int $httpCode HTTP-код (по умолчанию 200)
-     * @param string|null $messageKey Словарный ключ для поиска перевода в указанной локали
-     * @param string|null $guiMessage Локализованное сообщение для вывода в GUI
+     * @param mixed|null $data Response payload (main response data)
+     * @param ApiPaginator|null $paginator Pagination metadata
+     * @param int $httpCode HTTP status code (default: 200)
+     * @param string|null $messageKey Dictionary key used to look up the translation in the specified locale
+     * @param string|null $guiMessage Localized message intended for GUI output
      */
     public static function success(
         mixed $data = null,
@@ -72,13 +72,13 @@ class ApiResponse extends JsonResponse
     }
 
     /**
-     * Унифицированный JSON-ответ об ошибке.
-     * Пример вызова:
+     * Unified JSON error response.
+     * Example usage:
      *     return ApiResponse::error(404);
-     *     return ApiResponse::error(404, 'auth_login.user_not_found', 'Пользователь не найден');
-     *     см. также в Handler@render
+     *     return ApiResponse::error(404, 'auth_login.user_not_found', 'User not found');
+     *     // see also Handler::render()
      *
-     * Пример ответа:
+     * Example response:
      * {
      *   "success": false,
      *   "http_code": 4XX | 5XX,
@@ -87,11 +87,11 @@ class ApiResponse extends JsonResponse
      *   "details": {...} | null
      * }
      *
-     * @param int $httpCode HTTP-код
-     * @param string|null $messageKey Словарный ключ для поиска перевода в указанной локали
-     * @param string|null $guiMessage Локализованное сообщение для вывода в GUI
-     * @param string|null $sysMessage Кастомное сообщение из аргумента исключения (если не указано - возвращает null)
-     * @param mixed|null $details Дополнительные данные (например, ошибки валидации)
+     * @param int $httpCode HTTP status code
+     * @param string|null $messageKey Dictionary key used to look up the translation in the specified locale
+     * @param string|null $guiMessage Localized message intended for GUI output
+     * @param string|null $sysMessage Custom message from the exception argument (returns null if not provided)
+     * @param mixed|null $details Additional data (e.g., validation errors)
      */
     public static function error(
         int $httpCode,

@@ -9,8 +9,8 @@ use PHPUnit\Framework\Attributes\Test;
 use Src83\LaravelApiResponse\Tests\TestCase;
 
 /**
- * Feature-тест макроса isApi()
- * Проверяются все ключевые сценарии: API-путь, заголовки JSON, Bearer-токен и Sanctum-cookie.
+ * Feature test for the isApi() macro.
+ * Verifies all key scenarios: API path, JSON headers, Bearer token, and Sanctum cookie.
  * php artisan test --filter=RequestIsApiTest
  */
 final class RequestIsApiTest extends TestCase

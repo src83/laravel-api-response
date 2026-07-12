@@ -14,23 +14,23 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class WrapApiResponse
 {
     /**
-     * Приведим все API-ответы к единому JSON-формату при финальной проверке структуры API-ответа.
+     * Normalize all API responses to a unified JSON format during the final API response structure check.
      */
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
 
-        // Пропускаем нестандартные типы ответов (например, загрузки файлов)
+        // Skip non-standard response types (e.g., file downloads)
         if ($response instanceof BinaryFileResponse || $response instanceof StreamedResponse) {
             return $response;
         }
 
-        // Если ответ уже стандартизирован — сразу возвращаем как есть
+        // If the response is already standardized — return it as is
         if ($response instanceof ApiResponse) {
             return $response;
         }
 
-        // Нестандартный тип ответа без метода getOriginalContent — пропускаем
+        // Non-standard response type without a getOriginalContent method — skip it
         if (!method_exists($response, 'getOriginalContent')) {
             return $response;
         }
@@ -40,7 +40,7 @@ class WrapApiResponse
         $data = $content;
         $status = $response->getStatusCode();
 
-        // Оборачиваем ответ в стандартную унифицированную структуру
+        // Wrapping the response in a standard, unified structure
         if ($status >= 200 && $status < 300) {
             return ApiResponse::success(data: $data, httpCode: $status);
         }

@@ -82,7 +82,7 @@ final class ApiErrorResponseTest extends TestCase
         $response = ApiErrorResponse::make(
             httpCode: Response::HTTP_CONFLICT,
             messageKey: 'test.conflict',
-            sysMessage: 'Запись заблокирована бизнес-логикой',
+            sysMessage: 'Record is locked by business logic',
             details: ['uid' => 123],
         );
 
@@ -97,7 +97,7 @@ final class ApiErrorResponseTest extends TestCase
         $this->assertSame('test.conflict', $json['message']['key']);
         $this->assertNotEmpty($json['message']['gui']);
         $this->assertIsString($json['message']['gui']);
-        $this->assertSame('Запись заблокирована бизнес-логикой', $json['message']['sys']);
+        $this->assertSame('Record is locked by business logic', $json['message']['sys']);
 
         $this->assertSame(['uid' => 123], $json['details']);
     }

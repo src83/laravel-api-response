@@ -39,7 +39,7 @@ final class LocalizationHelperTest extends TestCase
         $loggerMock = Mockery::mock(ApiLoggerInterface::class);
         $loggerMock
             ->expects('translationMissing')
-            ->never();  // Когда перевод найден -- лога быть не может
+            ->never();  // When a translation is found — no log entry should be created
         $this->app->instance(ApiLoggerInterface::class, $loggerMock);
 
         $resolver = app(LocalizationResolver::class);
@@ -62,7 +62,7 @@ final class LocalizationHelperTest extends TestCase
         $loggerMock
             ->expects('translationMissing')
             ->with(Mockery::type('array'))
-            ->once();  // Когда модульный перевод не найден -- логируем один раз
+            ->once();  // When the module translation is not found — log just once
         $this->app->instance(ApiLoggerInterface::class, $loggerMock);
 
         $resolver = app(LocalizationResolver::class);
@@ -86,7 +86,7 @@ final class LocalizationHelperTest extends TestCase
         $loggerMock
             ->expects('translationMissing')
             ->with(Mockery::type('array'))
-            ->twice();  // Когда и модульный и базовый перевод не найден -- логируем два раза
+            ->twice();  // When neither the module nor the base translation is found — log twice
         $this->app->instance(ApiLoggerInterface::class, $loggerMock);
 
         $resolver = app(LocalizationResolver::class);
@@ -108,7 +108,7 @@ final class LocalizationHelperTest extends TestCase
         $loggerMock = Mockery::mock(ApiLoggerInterface::class);
         $loggerMock
             ->expects('translationMissing')
-            ->never();  // Когда перевод найден -- лога быть не может
+            ->never();  // When a translation is found — no log entry should be created
         $this->app->instance(ApiLoggerInterface::class, $loggerMock);
 
         $resolver = app(LocalizationResolver::class);
@@ -131,7 +131,7 @@ final class LocalizationHelperTest extends TestCase
         $loggerMock
             ->expects('translationMissing')
             ->with(Mockery::type('array'))
-            ->once();  // Когда базовый перевод не найден -- логируем один раз
+            ->once();  // When the base translation is not found — log just once
         $this->app->instance(ApiLoggerInterface::class, $loggerMock);
 
         $resolver = app(LocalizationResolver::class);

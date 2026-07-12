@@ -12,13 +12,18 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class SetupHeadersApiResponse
 {
     /**
-     * Гарантирует, что все API-ответы возвращаются с корректным JSON-заголовком
+     * Ensures API responses use the correct Content-Type and can enrich JSON responses with execution time metadata.
      *
-     * Laravel автоматически определяет и устанавливает Content-Type: application/json для JsonResponse
+     * Binary file responses are left untouched.
+     * Laravel automatically sets 'Content-Type: application/json' for JsonResponse instances.
      *
-     * При необходимости можем через конфиг установить заголовок ответа Content-Type на тот, который
-     * запросили в Accept. Но при такой ручной установке Content-Type по Accept браузер ожидает не JSON,
-     * но в данных приходит JSON → Chrome выкидывает белый экран. Это всего лишь опция.
+     * If 'api_response.direct_accept_header' is enabled, Content-Type mirrors the request's Accept header instead.
+     * Warning: if Accept is e.g. 'text/html' but the body is still JSON, Chrome may show a blank page — use with caution.
+     *
+     * If 'api_response.force_json_response' is enabled, Content-Type is forced to 'application/json' regardless of Accept.
+     *
+     * If 'api_response.show_execution_time' is enabled, successful JSON responses get an additional
+     * 'meta.execution_time' field (in milliseconds).
      */
     public function handle(Request $request, Closure $next): mixed
     {

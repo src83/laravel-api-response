@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Src83\LaravelApiResponse\Tests\TestCase;
 
 /**
- * Проверяется корректность определения модуля: "ресурс" || "ресурс_действие"
+ * Verifies the correctness of module detection: "resource" || "resource_action"
  * php artisan test --filter=RequestApiModuleTest
  */
 final class RequestApiModuleTest extends TestCase

@@ -11,7 +11,7 @@ use Src83\LaravelApiResponse\Support\Logging\ApiLoggerInterface;
  * @internal
  * Internal localization resolver.
  *
- * Класс резолвится через DI, напрямую из приложения его брать не надо, есть LocalizationHelper
+ * This class is resolved via DI — don't access it directly through the app container; use LocalizationHelper instead.
  * Prefer using LocalizationHelper::getLocalizedMessage() for application-level access.
  */
 final readonly class LocalizationResolver
@@ -25,7 +25,7 @@ final readonly class LocalizationResolver
         $locale = app()->getLocale();
         $strategy = config('api_response.translation_lookup', 'strict');
 
-        // 1. Пробуем найти перевод по составному ключу
+        // 1. Try to find a translation by the composite key
         if (!empty($module)) {
             $moduleKey = "api_response.$module.$baseKey";
 
@@ -40,7 +40,7 @@ final readonly class LocalizationResolver
                 }
             }
 
-            // Перевод для модульного ключа отсутствует — логируем
+            // If no translation is found for the module key — log it
             $this->apiLogger->translationMissing([
                 'locale'   => $locale,
                 'module'   => $module,
@@ -50,7 +50,7 @@ final readonly class LocalizationResolver
             ]);
         }
 
-        // 2. Пробуем найти перевод только по базовому ключу
+        // 2. Try to find a translation using only the base key
         $baseKeyFull = "api_response.$baseKey";
 
         if ($strategy === 'strict' && Lang::has($baseKeyFull, $locale, false)) {
@@ -64,7 +64,7 @@ final readonly class LocalizationResolver
             }
         }
 
-        // Перевод для базового ключа (без модуля) отсутствует — логируем
+        // If no translation found for the base key (without module) — log it
         $this->apiLogger->translationMissing([
             'locale'   => $locale,
             'module'   => null,

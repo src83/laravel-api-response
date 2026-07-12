@@ -7,10 +7,10 @@ namespace Src83\LaravelApiResponse\Support\Resolvers;
 final class ModuleResolver
 {
     /**
-     * Возвращает модуль:
-     * 1) Если передан prefix → всегда используем его
-     * 2) Иначе → если модульная система включена → берём из request()
-     * 3) Иначе → null
+     * Resolves the module name using the following priority:
+     * 1) If $prefix has been passed — always use it
+     * 2) Otherwise, if the module system is enabled — take it from the current request
+     * 3) Otherwise — null
      */
     public static function resolve(?string $prefix): ?string
     {
@@ -28,19 +28,19 @@ final class ModuleResolver
         return null;
     }
 
-    // Проверяет включена ли модульная система API
+    // Checks whether the modular API system is enabled
     private static function isModuleEnabled(): bool
     {
         return config('api_response.is_module_available') === true;
     }
 
-    // Извлекает модуль по умолчанию из текущего запроса (см. 'apiModule' в ApiServiceProvider)
+    // Resolves the default module from the current request (see 'apiModule' in ApiServiceProvider)
     private static function getDefaultModule(): ?string
     {
         return request()->apiModule();
     }
 
-    // Поиск алиаса модуля
+    // Looks up the module alias
     private static function normalize(?string $module): ?string
     {
         if ($module === null) {

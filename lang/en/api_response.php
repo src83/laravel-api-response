@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Dictionary of operation results
- * API returns a result message from api_response dictionary
+ * Translation dictionary for API operation results.
+ * The API returns a message resolved from api_response dictionary
  */
 
 // EN
