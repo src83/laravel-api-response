@@ -7,7 +7,7 @@ namespace Src83\LaravelApiResponse\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class SetupHeadersApiRequest
+class ForceAcceptJson
 {
     /**
      * Ensures a valid Accept header is present for API requests.

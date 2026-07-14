@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class SetupHeadersApiResponse
+class ForceContentType
 {
     /**
      * Ensures API responses use the correct Content-Type header.

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class ApiContextMiddleware
+class BindRequestContext
 {
     public function handle(Request $request, Closure $next): mixed
     {

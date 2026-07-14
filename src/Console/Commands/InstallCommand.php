@@ -135,7 +135,7 @@ class InstallCommand extends Command
 
         $content = (string) file_get_contents($path);
 
-        if (str_contains($content, 'SetupHeadersApiRequest')) {
+        if (str_contains($content, 'ForceAcceptJson')) {
             $this->components->twoColumnDetail('app/Http/Kernel.php', '<fg=yellow;options=bold>SKIP</> (already patched)');
 
             return;
@@ -145,10 +145,10 @@ class InstallCommand extends Command
         $content = str_replace(
             "use Illuminate\Foundation\Http\Kernel as HttpKernel;",
             "use Illuminate\Foundation\Http\Kernel as HttpKernel;\n".
-            "use Src83\LaravelApiResponse\Http\Middleware\ApiContextMiddleware;\n".
             "use Src83\LaravelApiResponse\Http\Middleware\AppendExecutionTimeMeta;\n".
-            "use Src83\LaravelApiResponse\Http\Middleware\SetupHeadersApiRequest;\n".
-            "use Src83\LaravelApiResponse\Http\Middleware\SetupHeadersApiResponse;\n".
+            "use Src83\LaravelApiResponse\Http\Middleware\BindRequestContext;\n".
+            "use Src83\LaravelApiResponse\Http\Middleware\ForceAcceptJson;\n".
+            "use Src83\LaravelApiResponse\Http\Middleware\ForceContentType;\n".
             "use Src83\LaravelApiResponse\Http\Middleware\WrapApiResponse;",
             $content
         );
@@ -158,8 +158,8 @@ class InstallCommand extends Command
         if ($apiGroupPos !== false) {
             $lineEnd = strpos($content, "\n", $apiGroupPos) + 1;
             $content = substr($content, 0, $lineEnd)
-                ."            SetupHeadersApiRequest::class,\n"
-                ."            ApiContextMiddleware::class,\n"
+                ."            ForceAcceptJson::class,\n"
+                ."            BindRequestContext::class,\n"
                 .substr($content, $lineEnd);
         }
 
@@ -173,7 +173,7 @@ class InstallCommand extends Command
             $content = substr($content, 0, $lineEnd)
                 ."            WrapApiResponse::class,\n"
                 ."            AppendExecutionTimeMeta::class,\n"
-                ."            SetupHeadersApiResponse::class,\n"
+                ."            ForceContentType::class,\n"
                 .substr($content, $lineEnd);
         }
 
