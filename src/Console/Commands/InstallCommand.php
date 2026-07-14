@@ -146,6 +146,7 @@ class InstallCommand extends Command
             "use Illuminate\Foundation\Http\Kernel as HttpKernel;",
             "use Illuminate\Foundation\Http\Kernel as HttpKernel;\n".
             "use Src83\LaravelApiResponse\Http\Middleware\ApiContextMiddleware;\n".
+            "use Src83\LaravelApiResponse\Http\Middleware\AppendExecutionTimeMeta;\n".
             "use Src83\LaravelApiResponse\Http\Middleware\SetupHeadersApiRequest;\n".
             "use Src83\LaravelApiResponse\Http\Middleware\SetupHeadersApiResponse;\n".
             "use Src83\LaravelApiResponse\Http\Middleware\WrapApiResponse;",
@@ -171,6 +172,7 @@ class InstallCommand extends Command
             $lineEnd = strpos($content, "\n", $substitutePos) + 1;
             $content = substr($content, 0, $lineEnd)
                 ."            WrapApiResponse::class,\n"
+                ."            AppendExecutionTimeMeta::class,\n"
                 ."            SetupHeadersApiResponse::class,\n"
                 .substr($content, $lineEnd);
         }
