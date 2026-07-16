@@ -50,10 +50,10 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit -c tests/phpunit.xml",
         "lint": "vendor/bin/pint --test",
         "lint-fix": "vendor/bin/pint",
-        "analyse": "vendor/bin/phpstan analyse -c phpstan.neon --no-progress --no-interaction"
+        "stan": "vendor/bin/phpstan analyse -c phpstan.neon --no-progress --no-interaction",
+        "test": "vendor/bin/phpunit -c tests/phpunit.xml"
     },
     "config": {
         "sort-packages": true,
