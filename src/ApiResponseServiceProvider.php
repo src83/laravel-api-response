@@ -6,6 +6,7 @@ namespace Src83\LaravelApiResponse;
 
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
+use Src83\LaravelApiResponse\Console\Commands\CheckCommand;
 use Src83\LaravelApiResponse\Console\Commands\InstallCommand;
 use Src83\LaravelApiResponse\Support\Logging\ApiLogger;
 use Src83\LaravelApiResponse\Support\Logging\ApiLoggerInterface;
@@ -35,7 +36,7 @@ class ApiResponseServiceProvider extends ServiceProvider
 
     protected function bootForConsole(): void
     {
-        $this->commands([InstallCommand::class]);
+        $this->commands([InstallCommand::class, CheckCommand::class]);
 
         $this->publishes([
             __DIR__.'/../config/api_response.php'         => config_path('api_response.php'),

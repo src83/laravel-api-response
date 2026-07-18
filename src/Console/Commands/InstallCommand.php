@@ -26,6 +26,8 @@ class InstallCommand extends Command
 
         $this->newLine();
         $this->components->info('Laravel API Response installed successfully.');
+        $this->newLine();
+        $this->line('  Run <fg=cyan>php artisan api-response:check</> to verify what still needs manual configuration.');
 
         return self::SUCCESS;
     }
