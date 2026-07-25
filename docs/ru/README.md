@@ -114,7 +114,7 @@ return ApiErrorResponse::make(Response::HTTP_NOT_FOUND, 'user.not_found');
 > Документация находится в процессе написания. Ссылки будут обновлены перед первым стабильным релизом.
 
 - Установка и настройка → [docs/ru/installation.md](installation.md)
-- JSON-контракт ответов → `docs/ru/contract.md`
+- JSON-контракт ответов → `docs/ru/api-contract.md`
 - Локализация → `docs/ru/localization.md`
 - Логирование → `docs/ru/logging.md`
 - Обработка исключений → `docs/ru/exceptions.md`

@@ -114,7 +114,7 @@ return ApiErrorResponse::make(Response::HTTP_NOT_FOUND, 'user.not_found');
 > Documentation is being written. Links will be updated before the first stable release.
 
 - Installation & configuration → [docs/installation.md](docs/installation.md)
-- JSON response contract → `docs/contract.md`
+- JSON response contract → `docs/api-contract.md`
 - Localization → `docs/localization.md`
 - Logging → `docs/logging.md`
 - Exception handling → `docs/exceptions.md`
