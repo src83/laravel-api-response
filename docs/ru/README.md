@@ -122,5 +122,5 @@ return ApiErrorResponse::make(Response::HTTP_NOT_FOUND, 'user.not_found');
 
 ## Лицензия
 
-- Написано и защищено авторским правом &copy; 2026 [Roman Staroseltsev](https://github.com/src83).
-- Программное обеспечение с открытым исходным кодом, распространяется под [лицензией MIT](../../LICENSE.md).
+- Написано и защищено авторским правом &copy; 2026 [Roman Staroseltsev](https://github.com/src83)
+- Программное обеспечение с открытым исходным кодом, распространяется под [лицензией MIT](../../LICENSE.md)

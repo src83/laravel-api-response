@@ -122,5 +122,5 @@ return ApiErrorResponse::make(Response::HTTP_NOT_FOUND, 'user.not_found');
 
 ## License
 
-- Written and copyrighted &copy; 2026 by [Roman Staroseltsev](https://github.com/src83).
-- Open-source software licensed under the [MIT license](LICENSE.md).
+- Written and copyrighted &copy; 2026 by [Roman Staroseltsev](https://github.com/src83)
+- Open-source software licensed under the [MIT license](LICENSE.md)
