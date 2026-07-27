@@ -1,6 +1,6 @@
 {
     "name": "src83/laravel-api-response",
-    "description": "Structured REST API responses for Laravel with exception handling, localization, logging, and pagination",
+    "description": "Unified REST API Response formatter for Laravel with exception handling, localization, logging, and pagination",
     "keywords": ["laravel", "api", "response", "json", "exception", "handler", "localization", "pagination"],
     "homepage": "https://github.com/src83/laravel-api-response",
     "type": "library",

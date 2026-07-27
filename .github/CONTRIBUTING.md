@@ -1,5 +1,7 @@
 # Contributing
 
+**Available in other languages:** [RU](../docs/ru/CONTRIBUTING.md)
+
 ## Versioning
 
 This package follows [Semantic Versioning](https://semver.org/).

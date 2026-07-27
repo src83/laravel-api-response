@@ -1,5 +1,7 @@
 # Участие в разработке
 
+**Доступно на других языках:** [EN](../../.github/CONTRIBUTING.md)
+
 ## Версионирование
 
 Пакет следует [Semantic Versioning](https://semver.org/lang/ru/).
