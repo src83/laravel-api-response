@@ -20,14 +20,13 @@ class CheckCommand extends Command
 
         $fix = (bool) $this->option('fix');
         $stubsPath = __DIR__.'/../../../stubs';
-        $allDone = true;
 
         $allDone = $this->checkMarker(
             'app/Http/Kernel.php',
             app_path('Http/Kernel.php'),
             'ForceAcceptJson',
             'Run php artisan api-response:install',
-        ) && $allDone;
+        );
 
         $allDone = $this->checkMarker(
             'phpunit.xml',

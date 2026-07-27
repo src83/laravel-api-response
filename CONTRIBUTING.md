@@ -29,8 +29,8 @@ Breaking changes:
 
 ### Tagging
 
-- All development happens on the `main` branch
-- A tag is applied to `main` after the final commit:
+- All development happens on the `master` branch
+- A tag is applied to `master` after the final commit:
   ```bash
   git tag v1.0.0
   git push origin v1.0.0
