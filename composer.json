@@ -1,7 +1,7 @@
 {
     "name": "src83/laravel-api-response",
     "description": "Unified REST API Response formatter for Laravel with exception handling, localization, logging, and pagination",
-    "keywords": ["laravel", "api", "response", "json", "exception", "handler", "localization", "pagination"],
+    "keywords": ["laravel", "laravel-package", "api", "api-response", "rest-api", "json", "exception", "api-exceptions", "api-logger", "localization", "pagination", "middleware", "formatter"],
     "homepage": "https://github.com/src83/laravel-api-response",
     "type": "library",
     "license": "MIT",
@@ -41,7 +41,8 @@
     },
     "support": {
         "source": "https://github.com/src83/laravel-api-response",
-        "issues": "https://github.com/src83/laravel-api-response/issues"
+        "issues": "https://github.com/src83/laravel-api-response/issues",
+        "docs": "https://github.com/src83/laravel-api-response#readme"
     },
     "extra": {
         "laravel": {

@@ -1,6 +1,6 @@
 # Contributing
 
-**Available in other languages:** [RU](../docs/ru/CONTRIBUTING.md)
+**Available in other languages:** [RU](https://github.com/src83/laravel-api-response/blob/master/docs/ru/CONTRIBUTING.md)
 
 ## Versioning
 
